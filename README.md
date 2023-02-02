@@ -64,7 +64,7 @@ https://tlkl01qmcs.feishu.cn/docx/Ap3EdPNM9ofV0axcMyccuNpLnLd
 
 - follow 内容
 - follower 内容
-- **暂未包括内容：** friendUser 之后可以加入
+- **暂未包括内容：** `friendUser` 之后可以加入
 
 ## 项目启动
 
