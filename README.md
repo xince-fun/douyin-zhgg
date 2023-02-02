@@ -2,6 +2,14 @@
 
 参考课上所讲的 `easy-note` 做的结构。
 
+## 项目文档
+
+https://tlkl01qmcs.feishu.cn/docx/Ap3EdPNM9ofV0axcMyccuNpLnLd
+
+## 项目结构图
+
+等待补充....
+
 ## 目前文件结构树
 
 ```shell
