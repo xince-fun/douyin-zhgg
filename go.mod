@@ -3,8 +3,9 @@ module ByteTech-7815/douyin-zhgg
 go 1.19
 
 require (
-	github.com/apache/thrift v0.17.0
+	github.com/apache/thrift v0.13.0
 	github.com/cloudwego/kitex v0.4.4
+	github.com/golang-jwt/jwt/v4 v4.4.3
 	gorm.io/driver/mysql v1.4.5
 	gorm.io/gorm v1.24.4
 	gorm.io/plugin/opentelemetry v0.1.0

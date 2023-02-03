@@ -51,9 +51,15 @@ https://tlkl01qmcs.feishu.cn/docx/Ap3EdPNM9ofV0axcMyccuNpLnLd
     └── errno
 ```
 
+## 注意事项
+
+- 把数据访问全放在`dal`目录下
+
+
+- 错误生成在`pkg/errno`下，之后内容多的话可以把`Errcode`和`Err`单独拎出来放在一个文件
+
 ## 包括内容
 
-把数据访问全放在`dal`目录下
 
 对内容有疑问可以直接看idl文件，里面写的比较清晰了。
 
