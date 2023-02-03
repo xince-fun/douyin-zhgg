@@ -81,4 +81,16 @@ docker network create zhgg-dy_zhhhdy_net
 docker-compose up
 ```
 
+补充 可以使用以下命令检查网络
+```shell
+docker network ls
+```
+
 ### 3、启动服务 暂时还未补充
+
+```shell
+cd cmd/user
+sh build.sh
+sh output/bootstrap.sh
+```
+
