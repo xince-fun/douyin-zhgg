@@ -85,7 +85,7 @@ go mod tidy
 ### 2、启动项目所依赖的环境
 
 ```shell
-docker network create zhgg-dy_zhhhdy_net
+docker network create zhgg-dy_zhggdy_net
 docker-compose up
 ```
 
