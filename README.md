@@ -1,3 +1,9 @@
+[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/gomods/athens.svg)](https://github.com/gomods/athens)
+[![Kitex](https://img.shields.io/badge/Kitex-v0.4.4-green)](https://github.com/cloudwego/kitex)
+[![Gorm](https://img.shields.io/badge/Gorm-v1.24.2-blue)](https://gorm.io/)
+[![MySQL](https://img.shields.io/badge/MySQL-v8.0.31-red)](https://gorm.io/)
+
+
 # douyin-zhgg
 
 参考课上所讲的 `easy-note` 做的结构。
