@@ -28,6 +28,7 @@ func Init() {
 		&Video{},
 		&Favorite{},
 		&Comment{},
+		&Follow{},
 	)
 	if err != nil {
 		panic(err)
