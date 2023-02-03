@@ -53,6 +53,8 @@ https://tlkl01qmcs.feishu.cn/docx/Ap3EdPNM9ofV0axcMyccuNpLnLd
 
 ## 包括内容
 
+把数据访问全放在`dal`目录下
+
 对内容有疑问可以直接看idl文件，里面写的比较清晰了。
 
 ### base方向
