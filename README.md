@@ -1,3 +1,9 @@
+[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/gomods/athens.svg)](https://github.com/gomods/athens)
+[![Kitex](https://img.shields.io/badge/Kitex-v0.4.4-green)](https://github.com/cloudwego/kitex)
+[![Gorm](https://img.shields.io/badge/Gorm-v1.24.2-blue)](https://gorm.io/)
+[![MySQL](https://img.shields.io/badge/MySQL-v8.0.31-red)](https://gorm.io/)
+
+
 # douyin-zhgg
 
 参考课上所讲的 `easy-note` 做的结构。
@@ -47,6 +53,8 @@ https://tlkl01qmcs.feishu.cn/docx/Ap3EdPNM9ofV0axcMyccuNpLnLd
 
 ## 包括内容
 
+把数据访问全放在`dal`目录下
+
 对内容有疑问可以直接看idl文件，里面写的比较清晰了。
 
 ### base方向
@@ -77,7 +85,7 @@ go mod tidy
 ### 2、启动项目所依赖的环境
 
 ```shell
-docker network create zhgg-dy_zhhhdy_net
+docker network create zhgg-dy_zhggdy_net
 docker-compose up
 ```
 
