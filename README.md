@@ -84,7 +84,6 @@ https://tlkl01qmcs.feishu.cn/docx/Ap3EdPNM9ofV0axcMyccuNpLnLd
 
 ```shell
 git clone git@github.com:XinceChan/douyin-zhgg.git
-git pull
 ```
 
 ## 项目启动
