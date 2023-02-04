@@ -2303,7 +2303,7 @@ func (p *DouyinUserResponse) Field2DeepEqual(src *BaseResp) bool {
 }
 
 type UserService interface {
-	UserRegister(ctx context.Context, req *DouyinUserLoginRequest) (r *DouyinUserRegisterResponse, err error)
+	UserRegister(ctx context.Context, req *DouyinUserRegisterRequest) (r *DouyinUserRegisterResponse, err error)
 
 	UserLogin(ctx context.Context, req *DouyinUserLoginRequest) (r *DouyinUserLoginResponse, err error)
 
@@ -2336,7 +2336,7 @@ func (p *UserServiceClient) Client_() thrift.TClient {
 	return p.c
 }
 
-func (p *UserServiceClient) UserRegister(ctx context.Context, req *DouyinUserLoginRequest) (r *DouyinUserRegisterResponse, err error) {
+func (p *UserServiceClient) UserRegister(ctx context.Context, req *DouyinUserRegisterRequest) (r *DouyinUserRegisterResponse, err error) {
 	var _args UserServiceUserRegisterArgs
 	_args.Req = req
 	var _result UserServiceUserRegisterResult
@@ -2552,7 +2552,7 @@ func (p *userServiceProcessorUserInfo) Process(ctx context.Context, seqId int32,
 }
 
 type UserServiceUserRegisterArgs struct {
-	Req *DouyinUserLoginRequest `thrift:"req,1" frugal:"1,default,DouyinUserLoginRequest" json:"req"`
+	Req *DouyinUserRegisterRequest `thrift:"req,1" frugal:"1,default,DouyinUserRegisterRequest" json:"req"`
 }
 
 func NewUserServiceUserRegisterArgs() *UserServiceUserRegisterArgs {
@@ -2563,15 +2563,15 @@ func (p *UserServiceUserRegisterArgs) InitDefault() {
 	*p = UserServiceUserRegisterArgs{}
 }
 
-var UserServiceUserRegisterArgs_Req_DEFAULT *DouyinUserLoginRequest
+var UserServiceUserRegisterArgs_Req_DEFAULT *DouyinUserRegisterRequest
 
-func (p *UserServiceUserRegisterArgs) GetReq() (v *DouyinUserLoginRequest) {
+func (p *UserServiceUserRegisterArgs) GetReq() (v *DouyinUserRegisterRequest) {
 	if !p.IsSetReq() {
 		return UserServiceUserRegisterArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *UserServiceUserRegisterArgs) SetReq(val *DouyinUserLoginRequest) {
+func (p *UserServiceUserRegisterArgs) SetReq(val *DouyinUserRegisterRequest) {
 	p.Req = val
 }
 
@@ -2643,7 +2643,7 @@ ReadStructEndError:
 }
 
 func (p *UserServiceUserRegisterArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Req = NewDouyinUserLoginRequest()
+	p.Req = NewDouyinUserRegisterRequest()
 	if err := p.Req.Read(iprot); err != nil {
 		return err
 	}
@@ -2715,7 +2715,7 @@ func (p *UserServiceUserRegisterArgs) DeepEqual(ano *UserServiceUserRegisterArgs
 	return true
 }
 
-func (p *UserServiceUserRegisterArgs) Field1DeepEqual(src *DouyinUserLoginRequest) bool {
+func (p *UserServiceUserRegisterArgs) Field1DeepEqual(src *DouyinUserRegisterRequest) bool {
 
 	if !p.Req.DeepEqual(src) {
 		return false

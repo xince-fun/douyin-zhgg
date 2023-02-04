@@ -1892,7 +1892,7 @@ ReadStructEndError:
 func (p *UserServiceUserRegisterArgs) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
-	tmp := NewDouyinUserLoginRequest()
+	tmp := NewDouyinUserRegisterRequest()
 	if l, err := tmp.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {

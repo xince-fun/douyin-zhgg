@@ -101,7 +101,7 @@ func newServiceClient(c client.Client) *kClient {
 	}
 }
 
-func (p *kClient) UserRegister(ctx context.Context, req *user.DouyinUserLoginRequest) (r *user.DouyinUserRegisterResponse, err error) {
+func (p *kClient) UserRegister(ctx context.Context, req *user.DouyinUserRegisterRequest) (r *user.DouyinUserRegisterResponse, err error) {
 	var _args user.UserServiceUserRegisterArgs
 	_args.Req = req
 	var _result user.UserServiceUserRegisterResult

@@ -19,7 +19,7 @@ func NewFollowListService(ctx context.Context) *GetFollowListService {
 	return &GetFollowListService{ctx: ctx}
 }
 
-func (s *GetFollowListService) GetFollowList(req relation.DouyinRelationFollowerListRequest) ([]*user.User, error) {
+func (s *GetFollowListService) GetFollowList(req *relation.DouyinRelationFollowerListRequest) ([]*user.User, error) {
 	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
 		return nil, err

@@ -21,7 +21,7 @@ func NewGetUserInfoService(ctx context.Context) *GetUserInfoService {
 }
 
 // GetUserInfo get user info
-func (s *GetUserInfoService) GetUserInfo(req user.DouyinUserRequest) (*user.User, error) {
+func (s *GetUserInfoService) GetUserInfo(req *user.DouyinUserRequest) (*user.User, error) {
 	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
 		return nil, err

@@ -28,8 +28,14 @@ func (p *BaseResp) IsValid() error {
 	return nil
 }
 func (p *DouyinUserRegisterRequest) IsValid() error {
+	if len(p.Username) < int(2) {
+		return fmt.Errorf("field Username min_len rule failed, current value: %d", len(p.Username))
+	}
 	if len(p.Username) > int(32) {
 		return fmt.Errorf("field Username max_len rule failed, current value: %d", len(p.Username))
+	}
+	if len(p.Password) < int(6) {
+		return fmt.Errorf("field Password min_len rule failed, current value: %d", len(p.Password))
 	}
 	if len(p.Password) > int(32) {
 		return fmt.Errorf("field Password max_len rule failed, current value: %d", len(p.Password))
@@ -45,8 +51,14 @@ func (p *DouyinUserRegisterResponse) IsValid() error {
 	return nil
 }
 func (p *DouyinUserLoginRequest) IsValid() error {
+	if len(p.Username) < int(2) {
+		return fmt.Errorf("field Username min_len rule failed, current value: %d", len(p.Username))
+	}
 	if len(p.Username) > int(32) {
 		return fmt.Errorf("field Username max_len rule failed, current value: %d", len(p.Username))
+	}
+	if len(p.Password) < int(6) {
+		return fmt.Errorf("field Password min_len rule failed, current value: %d", len(p.Password))
 	}
 	if len(p.Password) > int(32) {
 		return fmt.Errorf("field Password max_len rule failed, current value: %d", len(p.Password))

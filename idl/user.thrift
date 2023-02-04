@@ -16,8 +16,8 @@ struct BaseResp {
 
 // 用户注册接口
 struct douyin_user_register_request {
-    1: required string username ( vt.max_size = "32" ), // 注册用户名，最长32个字符
-    2: required string password ( vt.max_size = "32" ), // 密码，最长32个字符
+    1: required string username ( vt.min_size = "2", vt.max_size = "32" ), // 注册用户名，最长32个字符
+    2: required string password ( vt.min_size = "6", vt.max_size = "32" ), // 密码，最长32个字符
 }
 
 struct douyin_user_register_response {
@@ -28,8 +28,8 @@ struct douyin_user_register_response {
 
 // 用户登陆接口
 struct douyin_user_login_request {
-    1: required string username ( vt.max_size = "32" ), // 登录用户名
-    2: required string password ( vt.max_size = "32" ), // 登录密码
+    1: required string username ( vt.min_size = "2", vt.max_size = "32" ), // 登录用户名
+    2: required string password ( vt.min_size = "6", vt.max_size = "32" ), // 登录密码
 }
 
 struct douyin_user_login_response {
@@ -50,7 +50,7 @@ struct douyin_user_response {
 }
 
 service UserService {
-    douyin_user_register_response UserRegister(1: douyin_user_login_request req),
+    douyin_user_register_response UserRegister(1: douyin_user_register_request req),
     douyin_user_login_response UserLogin(1: douyin_user_login_request req),
     douyin_user_response UserInfo(1: douyin_user_request req),
 }

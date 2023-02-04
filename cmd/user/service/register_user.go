@@ -20,7 +20,7 @@ func NewRegisterUserService(ctx context.Context) *RegisterUserService {
 }
 
 // RegisterUser register user info
-func (s *RegisterUserService) RegisterUser(req user.DouyinUserRegisterRequest) (int64, error) {
+func (s *RegisterUserService) RegisterUser(req *user.DouyinUserRegisterRequest) (int64, error) {
 	users, err := db.QueryUserByName(s.ctx, req.Username)
 	if err != nil {
 		return 0, err
