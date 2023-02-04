@@ -3,6 +3,9 @@
 package api
 
 import (
+	"ByteTech-7815/douyin-zhgg/cmd/api/biz/rpc"
+	"ByteTech-7815/douyin-zhgg/kitex_gen/user"
+	"ByteTech-7815/douyin-zhgg/pkg/errno"
 	"context"
 
 	api "ByteTech-7815/douyin-zhgg/cmd/api/biz/model/api"
@@ -33,29 +36,18 @@ func UserRegister(ctx context.Context, c *app.RequestContext) {
 	var req api.DouyinUserRegisterRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		SendResponse(c, errno.ConvertErr(err))
 		return
 	}
-
-	resp := new(api.DouyinUserRegisterResponse)
-
-	c.JSON(consts.StatusOK, resp)
-}
-
-// UserLogin .
-// @router /douyin/user/login/ [POST]
-func UserLogin(ctx context.Context, c *app.RequestContext) {
-	var err error
-	var req api.DouyinUserLoginRequest
-	err = c.BindAndValidate(&req)
+	userId, token, err := rpc.RegisterUser(context.Background(), &user.DouyinUserRegisterRequest{
+		Username: req.Username,
+		Password: req.Password,
+	})
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		SendResponse(c, errno.ConvertErr(err), nil)
 		return
 	}
-
-	resp := new(api.DouyinUserLoginResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	SendResponse(c, errno.Success, userId, token)
 }
 
 // UserInfo .

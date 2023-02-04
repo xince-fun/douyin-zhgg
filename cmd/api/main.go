@@ -3,11 +3,20 @@
 package main
 
 import (
+	"ByteTech-7815/douyin-zhgg/cmd/api/biz/rpc"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
+func Init() {
+	rpc.InitRPC()
+}
+
 func main() {
-	h := server.Default()
+	Init()
+	h := server.New(
+		server.WithHostPorts(":8080"),
+		server.WithHandleMethodNotAllowed(true),
+	)
 
 	register(h)
 	h.Spin()

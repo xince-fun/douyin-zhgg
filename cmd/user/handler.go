@@ -5,6 +5,7 @@ import (
 	"ByteTech-7815/douyin-zhgg/cmd/user/service"
 	user "ByteTech-7815/douyin-zhgg/kitex_gen/user"
 	"ByteTech-7815/douyin-zhgg/pkg/errno"
+	"ByteTech-7815/douyin-zhgg/pkg/jwt"
 	"context"
 )
 
@@ -25,7 +26,14 @@ func (s *UserServiceImpl) UserRegister(ctx context.Context, req *user.DouyinUser
 		resp.BaseResp = pack.BuildBaseResp(err)
 		return resp, nil
 	}
+
+	token, err := jwt.GenerateToken(req.Username, uid)
+	if err != nil {
+		resp.BaseResp = pack.BuildBaseResp(err)
+		return resp, nil
+	}
 	resp.UserId = uid
+	resp.Token = token
 	resp.BaseResp = pack.BuildBaseResp(errno.Success)
 	return resp, nil
 }

@@ -4,6 +4,10 @@ package main
 
 import (
 	handler "ByteTech-7815/douyin-zhgg/cmd/api/biz/handler"
+	"ByteTech-7815/douyin-zhgg/cmd/api/biz/handler/api"
+	"ByteTech-7815/douyin-zhgg/pkg/errno"
+	"context"
+	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
@@ -12,4 +16,10 @@ func customizedRegister(r *server.Hertz) {
 	r.GET("/ping", handler.Ping)
 
 	// your code ...
+	r.NoRoute(func(ctx context.Context, c *app.RequestContext) { // used for HTTP 404
+		api.SendResponse(c, errno.ServiceErr, nil)
+	})
+	r.NoMethod(func(ctx context.Context, c *app.RequestContext) { // used for HTTP 405
+		api.SendResponse(c, errno.ServiceErr, nil)
+	})
 }

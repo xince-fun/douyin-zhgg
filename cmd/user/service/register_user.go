@@ -25,7 +25,7 @@ func (s *RegisterUserService) RegisterUser(req *user.DouyinUserRegisterRequest) 
 	if err != nil {
 		return 0, err
 	}
-	if len(users) == 0 {
+	if len(users) != 0 {
 		return 0, errno.UserAlreadyExistErr
 	}
 

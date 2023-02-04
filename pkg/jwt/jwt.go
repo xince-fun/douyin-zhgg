@@ -23,7 +23,7 @@ func GenerateToken(username string, userid int64) (string, error) {
 		},
 	}
 
-	return jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(consts.SecretKey)
+	return jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(consts.SecretKey))
 }
 
 // ParseToken 解析JWT

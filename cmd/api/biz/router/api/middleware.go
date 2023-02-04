@@ -161,16 +161,6 @@ func _userinfoMw() []app.HandlerFunc {
 	return nil
 }
 
-func _loginMw() []app.HandlerFunc {
-	// your code...
-	return nil
-}
-
-func _userloginMw() []app.HandlerFunc {
-	// your code...
-	return nil
-}
-
 func _registerMw() []app.HandlerFunc {
 	// your code...
 	return nil

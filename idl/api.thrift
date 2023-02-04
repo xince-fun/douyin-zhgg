@@ -38,22 +38,10 @@ struct BaseResp {
 // 用户注册接口
 struct douyin_user_register_request {
     1: required string username ( api.form="username", api.vd="len($) < 32" ), // 注册用户名，最长32个字符
-    2: required string password ( api.form="username", api.vd="len($) < 32" ), // 密码，最长32个字符
+    2: required string password ( api.form="password", api.vd="len($) < 32" ), // 密码，最长32个字符
 }
 
 struct douyin_user_register_response {
-    1: required i64 user_id,        // 用户id
-    2: required string token,       // 用户鉴权token
-    3: required BaseResp base_resp,
-}
-
-// 用户登陆接口
-struct douyin_user_login_request {
-    1: required string username ( api.form="username", api.vd="len($) < 32" ), // 登录用户名
-    2: required string password ( api.form="username", api.vd="len($) < 32" ), // 登录密码
-}
-
-struct douyin_user_login_response {
     1: required i64 user_id,        // 用户id
     2: required string token,       // 用户鉴权token
     3: required BaseResp base_resp,
@@ -191,7 +179,6 @@ service ApiService {
     // basic service
     douyin_feed_response GetUserFeed(1:douyin_feed_request req) (api.get="/douyin/feed/")
     douyin_user_register_response UserRegister(1: douyin_user_register_request req) (api.post="/douyin/user/register/")
-    douyin_user_login_response UserLogin(1: douyin_user_login_request req) (api.post="/douyin/user/login/")
     douyin_user_response UserInfo(1: douyin_user_request req) (api.get="/douyin/user/")
     douyin_publish_action_response PublishAction(1: douyin_publish_action_request req) (api.post="/douyin/publish/action/")
     douyin_publish_list_response PublishList(1: douyin_publish_list_request req) (api.get="/douyin/publish/list/")
