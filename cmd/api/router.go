@@ -4,9 +4,8 @@ package main
 
 import (
 	handler "ByteTech-7815/douyin-zhgg/cmd/api/biz/handler"
-	"context"
-
 	"ByteTech-7815/douyin-zhgg/pkg/errno"
+	"context"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )

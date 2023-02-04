@@ -62,7 +62,7 @@ struct douyin_user_login_response {
 // 用户信息
 struct douyin_user_request {
     1: required i64 user_id ( api.query="user_id" ),   // 用户id
-    2: required string token ( api.query="user_id" ),  // 用户鉴权token
+    2: required string token ( api.query="token" ),  // 用户鉴权token
 }
 
 struct douyin_user_response {

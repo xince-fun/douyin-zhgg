@@ -2333,7 +2333,7 @@ func (p *DouyinUserLoginResponse) String() string {
 // 用户信息
 type DouyinUserRequest struct {
 	UserID int64  `thrift:"user_id,1,required" json:"user_id,required" query:"user_id,required"`
-	Token  string `thrift:"token,2,required" json:"token,required" query:"user_id,required"`
+	Token  string `thrift:"token,2,required" json:"token,required" query:"token,required"`
 }
 
 func NewDouyinUserRequest() *DouyinUserRequest {
