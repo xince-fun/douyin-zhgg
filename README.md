@@ -119,3 +119,38 @@ sh build.sh
 sh output/bootstrap.sh
 ```
 
+```shell
+cd cmd/api
+go run .
+```
+
+
+### 4、API Requests
+
+推荐`postman`
+
+小队邀请： https://app.getpostman.com/join-team?invite_code=50b3f99fbf2f8f2ce2c6ffe942688ff3&target_code=43549d582ad5959e2d665f4dfbbbcb1b
+
+#### Register
+```json
+{
+    "username":"test1",
+    "password":"testtest"
+}
+```
+##### response
+```javascript
+// successful
+{
+    "status_code": 0,
+    "status_msg": "Success",
+    "user_id": 6,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxIiwidXNlcl9pZCI6NiwiZXhwIjoxNjc1NTkyODg2fQ.yuAu2Ov-Eg0OgR-LTXtu8FAD9ybIRQdQ7EDhTT9Z7x8"
+}
+// failed
+{
+    "status_code": 10010,
+    "status_msg": "User already exists",
+    "data": null
+}
+```

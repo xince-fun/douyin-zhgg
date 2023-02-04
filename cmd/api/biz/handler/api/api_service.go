@@ -44,10 +44,10 @@ func UserRegister(ctx context.Context, c *app.RequestContext) {
 		Password: req.Password,
 	})
 	if err != nil {
-		SendResponse(c, errno.ConvertErr(err), nil)
+		SendResponse(c, errno.ConvertErr(err))
 		return
 	}
-	SendResponse(c, errno.Success, userId, token)
+	SendUserResponse(c, errno.Success, userId, token)
 }
 
 // UserInfo .

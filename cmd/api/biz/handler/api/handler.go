@@ -21,3 +21,21 @@ func SendResponse(c *app.RequestContext, err error, data ...interface{}) {
 		Data:       data,
 	})
 }
+
+type UserResponse struct {
+	StatusCode int32  `json:"status_code"`
+	StatusMsg  string `json:"status_msg"`
+	UserId     int64  `json:"user_id,omitempty"`
+	Token      string `json:"token,omitempty"`
+}
+
+// SendUserResponse pack user response
+func SendUserResponse(c *app.RequestContext, err error, userId int64, token string) {
+	Err := errno.ConvertErr(err)
+	c.JSON(consts.StatusOK, UserResponse{
+		StatusCode: Err.ErrCode,
+		StatusMsg:  Err.ErrMsg,
+		UserId:     userId,
+		Token:      token,
+	})
+}
