@@ -58,6 +58,11 @@ https://tlkl01qmcs.feishu.cn/docx/Ap3EdPNM9ofV0axcMyccuNpLnLd
 
 - 错误生成在`pkg/errno`下，之后内容多的话可以把`Errcode`和`Err`单独拎出来放在一个文件
 
+
+- 一些参数条件判断可以写在thrift文件中，在`cmd/xx`中重新生成
+```shell
+kitex --thrift-plugin validator -module ByteTech-7815/douyin-zhgg -service xx -use ByteTech-7815/douyin-zhgg/kitex_gen ../../idl/xx.thrift
+```
 ## 包括内容
 
 
