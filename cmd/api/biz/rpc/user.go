@@ -49,15 +49,15 @@ func RegisterUser(ctx context.Context, req *user.DouyinUserRegisterRequest) (int
 }
 
 // LoginUser check user info
-func LoginUser(ctx context.Context, req *user.DouyinUserLoginRequest) (int64, string, error) {
+func LoginUser(ctx context.Context, req *user.DouyinUserLoginRequest) (int64, error) {
 	resp, err := userClient.UserLogin(ctx, req)
 	if err != nil {
-		return 0, "", err
+		return 0, err
 	}
 	if resp.BaseResp.StatusCode != 0 {
-		return 0, "", errno.NewErrNo(resp.BaseResp.StatusCode, *resp.BaseResp.StatsuMsg)
+		return 0, errno.NewErrNo(resp.BaseResp.StatusCode, *resp.BaseResp.StatsuMsg)
 	}
-	return resp.UserId, resp.Token, nil
+	return resp.UserId, nil
 }
 
 // UserInfo get user info

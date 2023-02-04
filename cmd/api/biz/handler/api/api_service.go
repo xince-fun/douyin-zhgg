@@ -3,12 +3,14 @@
 package api
 
 import (
+	"ByteTech-7815/douyin-zhgg/cmd/api/biz/handler"
+	"ByteTech-7815/douyin-zhgg/cmd/api/biz/middleware"
+	api "ByteTech-7815/douyin-zhgg/cmd/api/biz/model/api"
 	"ByteTech-7815/douyin-zhgg/cmd/api/biz/rpc"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/user"
 	"ByteTech-7815/douyin-zhgg/pkg/errno"
 	"context"
 
-	api "ByteTech-7815/douyin-zhgg/cmd/api/biz/model/api"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
@@ -36,7 +38,7 @@ func UserRegister(ctx context.Context, c *app.RequestContext) {
 	var req api.DouyinUserRegisterRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		SendResponse(c, errno.ConvertErr(err))
+		handler.SendResponse(c, errno.ConvertErr(err))
 		return
 	}
 	userId, token, err := rpc.RegisterUser(context.Background(), &user.DouyinUserRegisterRequest{
@@ -44,10 +46,16 @@ func UserRegister(ctx context.Context, c *app.RequestContext) {
 		Password: req.Password,
 	})
 	if err != nil {
-		SendResponse(c, errno.ConvertErr(err))
+		handler.SendResponse(c, errno.ConvertErr(err))
 		return
 	}
-	SendUserResponse(c, errno.Success, userId, token)
+	handler.SendUserResponse(c, errno.Success, userId, token)
+}
+
+// UserLogin .
+// @router /douyin/user/login/ [POST]
+func UserLogin(ctx context.Context, c *app.RequestContext) {
+	middleware.JwtMiddleware.LoginHandler(ctx, c)
 }
 
 // UserInfo .
@@ -57,13 +65,19 @@ func UserInfo(ctx context.Context, c *app.RequestContext) {
 	var req api.DouyinUserRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		handler.SendResponse(c, errno.ConvertErr(err))
 		return
 	}
 
-	resp := new(api.DouyinUserResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	user, err := rpc.UserInfo(context.Background(), &user.DouyinUserRequest{
+		UserId: req.UserID,
+		Token:  req.Token,
+	})
+	if err != nil {
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
+	handler.SendUserInfoResponse(c, errno.Success, user)
 }
 
 // PublishAction .

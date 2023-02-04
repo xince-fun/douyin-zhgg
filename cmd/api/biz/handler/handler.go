@@ -1,4 +1,4 @@
-package api
+package handler
 
 import (
 	"ByteTech-7815/douyin-zhgg/pkg/errno"
@@ -37,5 +37,21 @@ func SendUserResponse(c *app.RequestContext, err error, userId int64, token stri
 		StatusMsg:  Err.ErrMsg,
 		UserId:     userId,
 		Token:      token,
+	})
+}
+
+type UserInfoResponse struct {
+	StatusCode int32       `json:"status_code"`
+	StatusMsg  string      `json:"status_msg"`
+	User       interface{} `json:"user"`
+}
+
+// SendUserInfoResponse pack user info response
+func SendUserInfoResponse(c *app.RequestContext, err error, user interface{}) {
+	Err := errno.ConvertErr(err)
+	c.JSON(consts.StatusOK, UserInfoResponse{
+		StatusCode: Err.ErrCode,
+		StatusMsg:  Err.ErrMsg,
+		User:       user,
 	})
 }

@@ -3,11 +3,13 @@
 package main
 
 import (
+	"ByteTech-7815/douyin-zhgg/cmd/api/biz/middleware"
 	"ByteTech-7815/douyin-zhgg/cmd/api/biz/rpc"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
 func Init() {
+	middleware.InitJWT()
 	rpc.InitRPC()
 }
 
