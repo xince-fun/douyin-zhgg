@@ -5,7 +5,6 @@ import (
 	"ByteTech-7815/douyin-zhgg/dal/pack"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/user"
 	"ByteTech-7815/douyin-zhgg/pkg/errno"
-	"ByteTech-7815/douyin-zhgg/pkg/jwt"
 	"context"
 )
 
@@ -22,12 +21,8 @@ func NewGetUserInfoService(ctx context.Context) *GetUserInfoService {
 
 // GetUserInfo get user info
 func (s *GetUserInfoService) GetUserInfo(req *user.DouyinUserRequest) (*user.User, error) {
-	claims, err := jwt.ParseToken(req.Token)
-	if err != nil {
-		return nil, err
-	}
-
-	userIds := []int64{claims.UserId}
+	id := req.UserId
+	userIds := []int64{id}
 	users, err := db.QueryUserById(s.ctx, userIds)
 	if err != nil {
 		return nil, err

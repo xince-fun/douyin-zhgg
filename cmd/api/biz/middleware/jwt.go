@@ -26,7 +26,7 @@ func InitJWT() {
 		IdentityKey:   consts.IdentityKey,
 		IdentityHandler: func(ctx context.Context, c *app.RequestContext) interface{} {
 			claims := jwt.ExtractClaims(ctx, c)
-			return &api.User{ID: int64(claims["user_id"].(float64))}
+			return &User{UserId: int64(claims["id"].(float64))}
 		},
 		PayloadFunc: func(data interface{}) jwt.MapClaims {
 			if v, ok := data.(int64); ok {

@@ -69,7 +69,7 @@ func UserInfo(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	user, err := rpc.UserInfo(context.Background(), &user.DouyinUserRequest{
+	user, err := rpc.UserInfo(ctx, &user.DouyinUserRequest{
 		UserId: req.UserID,
 		Token:  req.Token,
 	})
