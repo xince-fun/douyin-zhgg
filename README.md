@@ -2,7 +2,7 @@
 [![Kitex](https://img.shields.io/badge/Kitex-v0.4.4-green)](https://github.com/cloudwego/kitex)
 [![Gorm](https://img.shields.io/badge/Gorm-v1.24.2-blue)](https://gorm.io/)
 [![MySQL](https://img.shields.io/badge/MySQL-v8.0.31-red)](https://gorm.io/)
-
+[![Hertz](https://img.shields.io/badge/Hertz-v0.5.2-purple)](https://github.com/cloudwego/hertz)
 
 # douyin-zhgg
 
