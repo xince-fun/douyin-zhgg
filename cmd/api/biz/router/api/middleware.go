@@ -133,8 +133,9 @@ func _action2Mw() []app.HandlerFunc {
 }
 
 func _relation_ctionMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{
+		middleware.JwtMiddleware.MiddlewareFunc(),
+	}
 }
 
 func _followerMw() []app.HandlerFunc {

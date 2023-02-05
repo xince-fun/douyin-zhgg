@@ -3,6 +3,7 @@ package service
 import (
 	"ByteTech-7815/douyin-zhgg/dal/db"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/relation"
+	"ByteTech-7815/douyin-zhgg/pkg/errno"
 	"context"
 )
 
@@ -21,6 +22,13 @@ func NewRelationActionService(ctx context.Context) *RelationActionService {
 }
 
 func (s *RelationActionService) RelationAction(req *relation.DouyinRelationActionRequest) error {
+	user, err := db.QueryUserById(s.ctx, []int64{req.ToUserId})
+	if err != nil {
+		return err
+	}
+	if len(user) == 0 {
+		return errno.UserNotExistErr
+	}
 	if req.ActionType == addFollow {
 		if db.IsFollowing(s.ctx, req.UserId, req.ToUserId) == false {
 			return db.CreateFollow(s.ctx, req.UserId, req.ToUserId)
