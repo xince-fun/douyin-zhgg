@@ -154,3 +154,47 @@ go run .
     "data": null
 }
 ```
+
+#### Login
+```json
+{
+  "username":"test3",
+  "password":"testtest"
+}
+```
+
+##### response
+```javascript
+// successfully
+{
+    "status_code": 0,
+    "status_msg": "Success",
+    "user_id": 8,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzU2MDcxOTIsImlkIjo4LCJvcmlnX2lhdCI6MTY3NTYwMzU5Mn0.-OnqilfucCUSwoQ-MuYfhesK1BtUzGEhTwhM1EzQagw"
+}
+// failed
+{
+    "status_code": 10012,
+    "status_msg": "Authorization failed",
+    "data": null
+}
+```
+
+#### User Info
+```http request
+127.0.0.1:8080/douyin/user/?user_id=8
+```
+
+```javascript
+{
+    "status_code": 0,
+    "status_msg": "Success",
+    "user": {
+        "id": 8,
+        "name": "test3",
+        "follow_count": 0,
+        "follower_count": 0,
+        "is_follow": true
+    }
+}
+```
