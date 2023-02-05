@@ -72,7 +72,6 @@ func UserInfo(ctx context.Context, c *app.RequestContext) {
 
 	user, err := rpc.UserInfo(ctx, &user.DouyinUserRequest{
 		UserId: req.UserID,
-		Token:  req.Token,
 	})
 	if err != nil {
 		handler.SendResponse(c, errno.ConvertErr(err))
@@ -187,14 +186,12 @@ func RelationAction(ctx context.Context, c *app.RequestContext) {
 		handler.SendResponse(c, errno.ConvertErr(err))
 		return
 	}
-
 	if err != nil {
 		handler.SendResponse(c, errno.ConvertErr(err))
 		return
 	}
 	err = rpc.RelationAction(ctx, &relation.DouyinRelationActionRequest{
 		UserId:     req.UserID,
-		Token:      req.Token,
 		ToUserId:   req.ToUserID,
 		ActionType: req.ActionType,
 	})

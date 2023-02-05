@@ -2332,8 +2332,7 @@ func (p *DouyinUserLoginResponse) String() string {
 
 // 用户信息
 type DouyinUserRequest struct {
-	UserID int64  `thrift:"user_id,1,required" json:"user_id,required" query:"user_id,required"`
-	Token  string `thrift:"token,2,required" form:"token,required" json:"token,required" query:"token,required"`
+	UserID int64 `thrift:"user_id,1,required" json:"user_id,required" query:"user_id,required"`
 }
 
 func NewDouyinUserRequest() *DouyinUserRequest {
@@ -2344,13 +2343,8 @@ func (p *DouyinUserRequest) GetUserID() (v int64) {
 	return p.UserID
 }
 
-func (p *DouyinUserRequest) GetToken() (v string) {
-	return p.Token
-}
-
 var fieldIDToName_DouyinUserRequest = map[int16]string{
 	1: "user_id",
-	2: "token",
 }
 
 func (p *DouyinUserRequest) Read(iprot thrift.TProtocol) (err error) {
@@ -2358,7 +2352,6 @@ func (p *DouyinUserRequest) Read(iprot thrift.TProtocol) (err error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 	var issetUserID bool = false
-	var issetToken bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -2385,17 +2378,6 @@ func (p *DouyinUserRequest) Read(iprot thrift.TProtocol) (err error) {
 					goto SkipFieldError
 				}
 			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetToken = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
 		default:
 			if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
@@ -2412,11 +2394,6 @@ func (p *DouyinUserRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	if !issetUserID {
 		fieldId = 1
-		goto RequiredFieldNotSetError
-	}
-
-	if !issetToken {
-		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -2446,15 +2423,6 @@ func (p *DouyinUserRequest) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DouyinUserRequest) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Token = v
-	}
-	return nil
-}
-
 func (p *DouyinUserRequest) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("douyin_user_request"); err != nil {
@@ -2463,10 +2431,6 @@ func (p *DouyinUserRequest) Write(oprot thrift.TProtocol) (err error) {
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
 			goto WriteFieldError
 		}
 
@@ -2503,23 +2467,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *DouyinUserRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("token", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Token); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
 func (p *DouyinUserRequest) String() string {
@@ -2746,8 +2693,7 @@ func (p *DouyinUserResponse) String() string {
 // Feed
 // 视频流接口
 type DouyinFeedRequest struct {
-	LatestTime *int64  `thrift:"latest_time,1,optional" form:"latest_time" json:"latest_time,omitempty" query:"latest_time"`
-	Token      *string `thrift:"token,2,optional" form:"token" json:"token,omitempty" query:"token"`
+	LatestTime *int64 `thrift:"latest_time,1,optional" form:"latest_time" json:"latest_time,omitempty" query:"latest_time"`
 }
 
 func NewDouyinFeedRequest() *DouyinFeedRequest {
@@ -2763,26 +2709,12 @@ func (p *DouyinFeedRequest) GetLatestTime() (v int64) {
 	return *p.LatestTime
 }
 
-var DouyinFeedRequest_Token_DEFAULT string
-
-func (p *DouyinFeedRequest) GetToken() (v string) {
-	if !p.IsSetToken() {
-		return DouyinFeedRequest_Token_DEFAULT
-	}
-	return *p.Token
-}
-
 var fieldIDToName_DouyinFeedRequest = map[int16]string{
 	1: "latest_time",
-	2: "token",
 }
 
 func (p *DouyinFeedRequest) IsSetLatestTime() bool {
 	return p.LatestTime != nil
-}
-
-func (p *DouyinFeedRequest) IsSetToken() bool {
-	return p.Token != nil
 }
 
 func (p *DouyinFeedRequest) Read(iprot thrift.TProtocol) (err error) {
@@ -2807,16 +2739,6 @@ func (p *DouyinFeedRequest) Read(iprot thrift.TProtocol) (err error) {
 		case 1:
 			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else {
@@ -2863,15 +2785,6 @@ func (p *DouyinFeedRequest) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DouyinFeedRequest) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Token = &v
-	}
-	return nil
-}
-
 func (p *DouyinFeedRequest) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("douyin_feed_request"); err != nil {
@@ -2880,10 +2793,6 @@ func (p *DouyinFeedRequest) Write(oprot thrift.TProtocol) (err error) {
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
 			goto WriteFieldError
 		}
 
@@ -2922,25 +2831,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *DouyinFeedRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if p.IsSetToken() {
-		if err = oprot.WriteFieldBegin("token", thrift.STRING, 2); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := oprot.WriteString(*p.Token); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
 func (p *DouyinFeedRequest) String() string {
@@ -3235,17 +3125,12 @@ func (p *DouyinFeedResponse) String() string {
 // Rublish
 // 视频投稿
 type DouyinPublishActionRequest struct {
-	Token string `thrift:"token,1,required" form:"token,required" json:"token,required" query:"token,required"`
-	Data  []byte `thrift:"data,2,required" form:"data,required" json:"data,required" query:"data,required"`
-	Title string `thrift:"title,3,required" form:"title,required" json:"title,required" vd:"len($) > 0"`
+	Data  []byte `thrift:"data,1,required" form:"data,required" json:"data,required" query:"data,required"`
+	Title string `thrift:"title,2,required" form:"title,required" json:"title,required" vd:"len($) > 0"`
 }
 
 func NewDouyinPublishActionRequest() *DouyinPublishActionRequest {
 	return &DouyinPublishActionRequest{}
-}
-
-func (p *DouyinPublishActionRequest) GetToken() (v string) {
-	return p.Token
 }
 
 func (p *DouyinPublishActionRequest) GetData() (v []byte) {
@@ -3257,16 +3142,14 @@ func (p *DouyinPublishActionRequest) GetTitle() (v string) {
 }
 
 var fieldIDToName_DouyinPublishActionRequest = map[int16]string{
-	1: "token",
-	2: "data",
-	3: "title",
+	1: "data",
+	2: "title",
 }
 
 func (p *DouyinPublishActionRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
-	var issetToken bool = false
 	var issetData bool = false
 	var issetTitle bool = false
 
@@ -3289,7 +3172,7 @@ func (p *DouyinPublishActionRequest) Read(iprot thrift.TProtocol) (err error) {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
-				issetToken = true
+				issetData = true
 			} else {
 				if err = iprot.Skip(fieldTypeId); err != nil {
 					goto SkipFieldError
@@ -3298,17 +3181,6 @@ func (p *DouyinPublishActionRequest) Read(iprot thrift.TProtocol) (err error) {
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField2(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetData = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 3:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField3(iprot); err != nil {
 					goto ReadFieldError
 				}
 				issetTitle = true
@@ -3331,18 +3203,13 @@ func (p *DouyinPublishActionRequest) Read(iprot thrift.TProtocol) (err error) {
 		goto ReadStructEndError
 	}
 
-	if !issetToken {
+	if !issetData {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
 
-	if !issetData {
-		fieldId = 2
-		goto RequiredFieldNotSetError
-	}
-
 	if !issetTitle {
-		fieldId = 3
+		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -3364,15 +3231,6 @@ RequiredFieldNotSetError:
 }
 
 func (p *DouyinPublishActionRequest) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Token = v
-	}
-	return nil
-}
-
-func (p *DouyinPublishActionRequest) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadBinary(); err != nil {
 		return err
 	} else {
@@ -3381,7 +3239,7 @@ func (p *DouyinPublishActionRequest) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DouyinPublishActionRequest) ReadField3(iprot thrift.TProtocol) error {
+func (p *DouyinPublishActionRequest) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
@@ -3404,10 +3262,6 @@ func (p *DouyinPublishActionRequest) Write(oprot thrift.TProtocol) (err error) {
 			fieldId = 2
 			goto WriteFieldError
 		}
-		if err = p.writeField3(oprot); err != nil {
-			fieldId = 3
-			goto WriteFieldError
-		}
 
 	}
 	if err = oprot.WriteFieldStop(); err != nil {
@@ -3428,10 +3282,10 @@ WriteStructEndError:
 }
 
 func (p *DouyinPublishActionRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("token", thrift.STRING, 1); err != nil {
+	if err = oprot.WriteFieldBegin("data", thrift.STRING, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Token); err != nil {
+	if err := oprot.WriteBinary([]byte(p.Data)); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -3445,24 +3299,7 @@ WriteFieldEndError:
 }
 
 func (p *DouyinPublishActionRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("data", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteBinary([]byte(p.Data)); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
-}
-
-func (p *DouyinPublishActionRequest) writeField3(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("title", thrift.STRING, 3); err != nil {
+	if err = oprot.WriteFieldBegin("title", thrift.STRING, 2); err != nil {
 		goto WriteFieldBeginError
 	}
 	if err := oprot.WriteString(p.Title); err != nil {
@@ -3473,9 +3310,9 @@ func (p *DouyinPublishActionRequest) writeField3(oprot thrift.TProtocol) (err er
 	}
 	return nil
 WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
 WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
 func (p *DouyinPublishActionRequest) String() string {
@@ -3640,8 +3477,7 @@ func (p *DouyinPublishActionResponse) String() string {
 
 // 发布列表
 type DouyinPublishListRequest struct {
-	UserID int64  `thrift:"user_id,1,required" form:"user_id,required" json:"user_id,required" query:"user_id,required"`
-	Token  string `thrift:"token,2,required" form:"token,required" json:"token,required" query:"token,required"`
+	UserID int64 `thrift:"user_id,1,required" form:"user_id,required" json:"user_id,required" query:"user_id,required"`
 }
 
 func NewDouyinPublishListRequest() *DouyinPublishListRequest {
@@ -3652,13 +3488,8 @@ func (p *DouyinPublishListRequest) GetUserID() (v int64) {
 	return p.UserID
 }
 
-func (p *DouyinPublishListRequest) GetToken() (v string) {
-	return p.Token
-}
-
 var fieldIDToName_DouyinPublishListRequest = map[int16]string{
 	1: "user_id",
-	2: "token",
 }
 
 func (p *DouyinPublishListRequest) Read(iprot thrift.TProtocol) (err error) {
@@ -3666,7 +3497,6 @@ func (p *DouyinPublishListRequest) Read(iprot thrift.TProtocol) (err error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 	var issetUserID bool = false
-	var issetToken bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -3693,17 +3523,6 @@ func (p *DouyinPublishListRequest) Read(iprot thrift.TProtocol) (err error) {
 					goto SkipFieldError
 				}
 			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetToken = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
 		default:
 			if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
@@ -3720,11 +3539,6 @@ func (p *DouyinPublishListRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	if !issetUserID {
 		fieldId = 1
-		goto RequiredFieldNotSetError
-	}
-
-	if !issetToken {
-		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -3754,15 +3568,6 @@ func (p *DouyinPublishListRequest) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DouyinPublishListRequest) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Token = v
-	}
-	return nil
-}
-
 func (p *DouyinPublishListRequest) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("douyin_publish_list_request"); err != nil {
@@ -3771,10 +3576,6 @@ func (p *DouyinPublishListRequest) Write(oprot thrift.TProtocol) (err error) {
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
 			goto WriteFieldError
 		}
 
@@ -3811,23 +3612,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *DouyinPublishListRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("token", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Token); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
 func (p *DouyinPublishListRequest) String() string {
@@ -4064,19 +3848,14 @@ func (p *DouyinPublishListResponse) String() string {
 
 // Comment
 type DouyinCommentActionRequest struct {
-	Token       string  `thrift:"token,1,required" form:"token,required" json:"token,required" query:"token,required"`
-	VideoID     int64   `thrift:"video_id,2,required" form:"video_id,required" json:"video_id,required" query:"video_id,required"`
-	ActionType  int32   `thrift:"action_type,3,required" form:"action_type,required" json:"action_type,required" query:"action_type,required"`
-	CommentText *string `thrift:"comment_text,4,optional" form:"comment_text" json:"comment_text,omitempty" query:"comment_text"`
-	CommentID   *int64  `thrift:"comment_id,5,optional" form:"comment_id" json:"comment_id,omitempty" query:"comment_id"`
+	VideoID     int64   `thrift:"video_id,1,required" form:"video_id,required" json:"video_id,required" query:"video_id,required"`
+	ActionType  int32   `thrift:"action_type,2,required" form:"action_type,required" json:"action_type,required" query:"action_type,required"`
+	CommentText *string `thrift:"comment_text,3,optional" form:"comment_text" json:"comment_text,omitempty" query:"comment_text"`
+	CommentID   *int64  `thrift:"comment_id,4,optional" form:"comment_id" json:"comment_id,omitempty" query:"comment_id"`
 }
 
 func NewDouyinCommentActionRequest() *DouyinCommentActionRequest {
 	return &DouyinCommentActionRequest{}
-}
-
-func (p *DouyinCommentActionRequest) GetToken() (v string) {
-	return p.Token
 }
 
 func (p *DouyinCommentActionRequest) GetVideoID() (v int64) {
@@ -4106,11 +3885,10 @@ func (p *DouyinCommentActionRequest) GetCommentID() (v int64) {
 }
 
 var fieldIDToName_DouyinCommentActionRequest = map[int16]string{
-	1: "token",
-	2: "video_id",
-	3: "action_type",
-	4: "comment_text",
-	5: "comment_id",
+	1: "video_id",
+	2: "action_type",
+	3: "comment_text",
+	4: "comment_id",
 }
 
 func (p *DouyinCommentActionRequest) IsSetCommentText() bool {
@@ -4125,7 +3903,6 @@ func (p *DouyinCommentActionRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
-	var issetToken bool = false
 	var issetVideoID bool = false
 	var issetActionType bool = false
 
@@ -4144,19 +3921,8 @@ func (p *DouyinCommentActionRequest) Read(iprot thrift.TProtocol) (err error) {
 
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetToken = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 2:
 			if fieldTypeId == thrift.I64 {
-				if err = p.ReadField2(iprot); err != nil {
+				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
 				issetVideoID = true
@@ -4165,9 +3931,9 @@ func (p *DouyinCommentActionRequest) Read(iprot thrift.TProtocol) (err error) {
 					goto SkipFieldError
 				}
 			}
-		case 3:
+		case 2:
 			if fieldTypeId == thrift.I32 {
-				if err = p.ReadField3(iprot); err != nil {
+				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
 				issetActionType = true
@@ -4176,9 +3942,9 @@ func (p *DouyinCommentActionRequest) Read(iprot thrift.TProtocol) (err error) {
 					goto SkipFieldError
 				}
 			}
-		case 4:
+		case 3:
 			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField4(iprot); err != nil {
+				if err = p.ReadField3(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else {
@@ -4186,9 +3952,9 @@ func (p *DouyinCommentActionRequest) Read(iprot thrift.TProtocol) (err error) {
 					goto SkipFieldError
 				}
 			}
-		case 5:
+		case 4:
 			if fieldTypeId == thrift.I64 {
-				if err = p.ReadField5(iprot); err != nil {
+				if err = p.ReadField4(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else {
@@ -4210,18 +3976,13 @@ func (p *DouyinCommentActionRequest) Read(iprot thrift.TProtocol) (err error) {
 		goto ReadStructEndError
 	}
 
-	if !issetToken {
+	if !issetVideoID {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
 
-	if !issetVideoID {
-		fieldId = 2
-		goto RequiredFieldNotSetError
-	}
-
 	if !issetActionType {
-		fieldId = 3
+		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -4243,15 +4004,6 @@ RequiredFieldNotSetError:
 }
 
 func (p *DouyinCommentActionRequest) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Token = v
-	}
-	return nil
-}
-
-func (p *DouyinCommentActionRequest) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
@@ -4260,7 +4012,7 @@ func (p *DouyinCommentActionRequest) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DouyinCommentActionRequest) ReadField3(iprot thrift.TProtocol) error {
+func (p *DouyinCommentActionRequest) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
@@ -4269,7 +4021,7 @@ func (p *DouyinCommentActionRequest) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DouyinCommentActionRequest) ReadField4(iprot thrift.TProtocol) error {
+func (p *DouyinCommentActionRequest) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
@@ -4278,7 +4030,7 @@ func (p *DouyinCommentActionRequest) ReadField4(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DouyinCommentActionRequest) ReadField5(iprot thrift.TProtocol) error {
+func (p *DouyinCommentActionRequest) ReadField4(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
@@ -4309,10 +4061,6 @@ func (p *DouyinCommentActionRequest) Write(oprot thrift.TProtocol) (err error) {
 			fieldId = 4
 			goto WriteFieldError
 		}
-		if err = p.writeField5(oprot); err != nil {
-			fieldId = 5
-			goto WriteFieldError
-		}
 
 	}
 	if err = oprot.WriteFieldStop(); err != nil {
@@ -4333,10 +4081,10 @@ WriteStructEndError:
 }
 
 func (p *DouyinCommentActionRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("token", thrift.STRING, 1); err != nil {
+	if err = oprot.WriteFieldBegin("video_id", thrift.I64, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Token); err != nil {
+	if err := oprot.WriteI64(p.VideoID); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -4350,10 +4098,10 @@ WriteFieldEndError:
 }
 
 func (p *DouyinCommentActionRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("video_id", thrift.I64, 2); err != nil {
+	if err = oprot.WriteFieldBegin("action_type", thrift.I32, 2); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI64(p.VideoID); err != nil {
+	if err := oprot.WriteI32(p.ActionType); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -4367,25 +4115,8 @@ WriteFieldEndError:
 }
 
 func (p *DouyinCommentActionRequest) writeField3(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("action_type", thrift.I32, 3); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteI32(p.ActionType); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
-}
-
-func (p *DouyinCommentActionRequest) writeField4(oprot thrift.TProtocol) (err error) {
 	if p.IsSetCommentText() {
-		if err = oprot.WriteFieldBegin("comment_text", thrift.STRING, 4); err != nil {
+		if err = oprot.WriteFieldBegin("comment_text", thrift.STRING, 3); err != nil {
 			goto WriteFieldBeginError
 		}
 		if err := oprot.WriteString(*p.CommentText); err != nil {
@@ -4397,14 +4128,14 @@ func (p *DouyinCommentActionRequest) writeField4(oprot thrift.TProtocol) (err er
 	}
 	return nil
 WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 4 begin error: ", p), err)
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
 WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
 }
 
-func (p *DouyinCommentActionRequest) writeField5(oprot thrift.TProtocol) (err error) {
+func (p *DouyinCommentActionRequest) writeField4(oprot thrift.TProtocol) (err error) {
 	if p.IsSetCommentID() {
-		if err = oprot.WriteFieldBegin("comment_id", thrift.I64, 5); err != nil {
+		if err = oprot.WriteFieldBegin("comment_id", thrift.I64, 4); err != nil {
 			goto WriteFieldBeginError
 		}
 		if err := oprot.WriteI64(*p.CommentID); err != nil {
@@ -4416,9 +4147,9 @@ func (p *DouyinCommentActionRequest) writeField5(oprot thrift.TProtocol) (err er
 	}
 	return nil
 WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 5 begin error: ", p), err)
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 begin error: ", p), err)
 WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 5 end error: ", p), err)
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
 }
 
 func (p *DouyinCommentActionRequest) String() string {
@@ -4630,16 +4361,11 @@ func (p *DouyinCommentActionResponse) String() string {
 }
 
 type DouyinCommentListRequest struct {
-	Token   string `thrift:"token,1,required" form:"token,required" json:"token,required" query:"token,required"`
-	VideoID int64  `thrift:"video_id,2,required" form:"video_id,required" json:"video_id,required" query:"video_id,required"`
+	VideoID int64 `thrift:"video_id,1,required" form:"video_id,required" json:"video_id,required" query:"video_id,required"`
 }
 
 func NewDouyinCommentListRequest() *DouyinCommentListRequest {
 	return &DouyinCommentListRequest{}
-}
-
-func (p *DouyinCommentListRequest) GetToken() (v string) {
-	return p.Token
 }
 
 func (p *DouyinCommentListRequest) GetVideoID() (v int64) {
@@ -4647,15 +4373,13 @@ func (p *DouyinCommentListRequest) GetVideoID() (v int64) {
 }
 
 var fieldIDToName_DouyinCommentListRequest = map[int16]string{
-	1: "token",
-	2: "video_id",
+	1: "video_id",
 }
 
 func (p *DouyinCommentListRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
-	var issetToken bool = false
 	var issetVideoID bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
@@ -4673,19 +4397,8 @@ func (p *DouyinCommentListRequest) Read(iprot thrift.TProtocol) (err error) {
 
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetToken = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 2:
 			if fieldTypeId == thrift.I64 {
-				if err = p.ReadField2(iprot); err != nil {
+				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
 				issetVideoID = true
@@ -4708,13 +4421,8 @@ func (p *DouyinCommentListRequest) Read(iprot thrift.TProtocol) (err error) {
 		goto ReadStructEndError
 	}
 
-	if !issetToken {
-		fieldId = 1
-		goto RequiredFieldNotSetError
-	}
-
 	if !issetVideoID {
-		fieldId = 2
+		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -4736,15 +4444,6 @@ RequiredFieldNotSetError:
 }
 
 func (p *DouyinCommentListRequest) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Token = v
-	}
-	return nil
-}
-
-func (p *DouyinCommentListRequest) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
@@ -4761,10 +4460,6 @@ func (p *DouyinCommentListRequest) Write(oprot thrift.TProtocol) (err error) {
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
 			goto WriteFieldError
 		}
 
@@ -4787,24 +4482,7 @@ WriteStructEndError:
 }
 
 func (p *DouyinCommentListRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("token", thrift.STRING, 1); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Token); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *DouyinCommentListRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("video_id", thrift.I64, 2); err != nil {
+	if err = oprot.WriteFieldBegin("video_id", thrift.I64, 1); err != nil {
 		goto WriteFieldBeginError
 	}
 	if err := oprot.WriteI64(p.VideoID); err != nil {
@@ -4815,9 +4493,9 @@ func (p *DouyinCommentListRequest) writeField2(oprot thrift.TProtocol) (err erro
 	}
 	return nil
 WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
 WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
 func (p *DouyinCommentListRequest) String() string {
@@ -4974,17 +4652,12 @@ func (p *DouyinCommentListResponse) String() string {
 
 // FAVORITE
 type DouyinFavoriteActionRequest struct {
-	Token      string `thrift:"token,1,required" form:"token,required" json:"token,required" query:"token,required"`
-	VideoID    int64  `thrift:"video_id,2,required" form:"video_id,required" json:"video_id,required" query:"video_id,required"`
-	ActionType int32  `thrift:"action_type,3,required" form:"action_type,required" json:"action_type,required" query:"action_type,required"`
+	VideoID    int64 `thrift:"video_id,1,required" form:"video_id,required" json:"video_id,required" query:"video_id,required"`
+	ActionType int32 `thrift:"action_type,2,required" form:"action_type,required" json:"action_type,required" query:"action_type,required"`
 }
 
 func NewDouyinFavoriteActionRequest() *DouyinFavoriteActionRequest {
 	return &DouyinFavoriteActionRequest{}
-}
-
-func (p *DouyinFavoriteActionRequest) GetToken() (v string) {
-	return p.Token
 }
 
 func (p *DouyinFavoriteActionRequest) GetVideoID() (v int64) {
@@ -4996,16 +4669,14 @@ func (p *DouyinFavoriteActionRequest) GetActionType() (v int32) {
 }
 
 var fieldIDToName_DouyinFavoriteActionRequest = map[int16]string{
-	1: "token",
-	2: "video_id",
-	3: "action_type",
+	1: "video_id",
+	2: "action_type",
 }
 
 func (p *DouyinFavoriteActionRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
-	var issetToken bool = false
 	var issetVideoID bool = false
 	var issetActionType bool = false
 
@@ -5024,19 +4695,8 @@ func (p *DouyinFavoriteActionRequest) Read(iprot thrift.TProtocol) (err error) {
 
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetToken = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 2:
 			if fieldTypeId == thrift.I64 {
-				if err = p.ReadField2(iprot); err != nil {
+				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
 				issetVideoID = true
@@ -5045,9 +4705,9 @@ func (p *DouyinFavoriteActionRequest) Read(iprot thrift.TProtocol) (err error) {
 					goto SkipFieldError
 				}
 			}
-		case 3:
+		case 2:
 			if fieldTypeId == thrift.I32 {
-				if err = p.ReadField3(iprot); err != nil {
+				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
 				issetActionType = true
@@ -5070,18 +4730,13 @@ func (p *DouyinFavoriteActionRequest) Read(iprot thrift.TProtocol) (err error) {
 		goto ReadStructEndError
 	}
 
-	if !issetToken {
+	if !issetVideoID {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
 
-	if !issetVideoID {
-		fieldId = 2
-		goto RequiredFieldNotSetError
-	}
-
 	if !issetActionType {
-		fieldId = 3
+		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -5103,15 +4758,6 @@ RequiredFieldNotSetError:
 }
 
 func (p *DouyinFavoriteActionRequest) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Token = v
-	}
-	return nil
-}
-
-func (p *DouyinFavoriteActionRequest) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
@@ -5120,7 +4766,7 @@ func (p *DouyinFavoriteActionRequest) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DouyinFavoriteActionRequest) ReadField3(iprot thrift.TProtocol) error {
+func (p *DouyinFavoriteActionRequest) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
@@ -5143,10 +4789,6 @@ func (p *DouyinFavoriteActionRequest) Write(oprot thrift.TProtocol) (err error) 
 			fieldId = 2
 			goto WriteFieldError
 		}
-		if err = p.writeField3(oprot); err != nil {
-			fieldId = 3
-			goto WriteFieldError
-		}
 
 	}
 	if err = oprot.WriteFieldStop(); err != nil {
@@ -5167,10 +4809,10 @@ WriteStructEndError:
 }
 
 func (p *DouyinFavoriteActionRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("token", thrift.STRING, 1); err != nil {
+	if err = oprot.WriteFieldBegin("video_id", thrift.I64, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Token); err != nil {
+	if err := oprot.WriteI64(p.VideoID); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -5184,24 +4826,7 @@ WriteFieldEndError:
 }
 
 func (p *DouyinFavoriteActionRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("video_id", thrift.I64, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteI64(p.VideoID); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
-}
-
-func (p *DouyinFavoriteActionRequest) writeField3(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("action_type", thrift.I32, 3); err != nil {
+	if err = oprot.WriteFieldBegin("action_type", thrift.I32, 2); err != nil {
 		goto WriteFieldBeginError
 	}
 	if err := oprot.WriteI32(p.ActionType); err != nil {
@@ -5212,9 +4837,9 @@ func (p *DouyinFavoriteActionRequest) writeField3(oprot thrift.TProtocol) (err e
 	}
 	return nil
 WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
 WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
 func (p *DouyinFavoriteActionRequest) String() string {
@@ -5378,8 +5003,7 @@ func (p *DouyinFavoriteActionResponse) String() string {
 }
 
 type DouyinFavoriteListRequest struct {
-	UserID int64  `thrift:"user_id,1,required" form:"user_id,required" json:"user_id,required" query:"user_id,required"`
-	Token  string `thrift:"token,2,required" form:"token,required" json:"token,required" query:"token,required"`
+	UserID int64 `thrift:"user_id,1,required" form:"user_id,required" json:"user_id,required" query:"user_id,required"`
 }
 
 func NewDouyinFavoriteListRequest() *DouyinFavoriteListRequest {
@@ -5390,13 +5014,8 @@ func (p *DouyinFavoriteListRequest) GetUserID() (v int64) {
 	return p.UserID
 }
 
-func (p *DouyinFavoriteListRequest) GetToken() (v string) {
-	return p.Token
-}
-
 var fieldIDToName_DouyinFavoriteListRequest = map[int16]string{
 	1: "user_id",
-	2: "token",
 }
 
 func (p *DouyinFavoriteListRequest) Read(iprot thrift.TProtocol) (err error) {
@@ -5404,7 +5023,6 @@ func (p *DouyinFavoriteListRequest) Read(iprot thrift.TProtocol) (err error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 	var issetUserID bool = false
-	var issetToken bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -5431,17 +5049,6 @@ func (p *DouyinFavoriteListRequest) Read(iprot thrift.TProtocol) (err error) {
 					goto SkipFieldError
 				}
 			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetToken = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
 		default:
 			if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
@@ -5458,11 +5065,6 @@ func (p *DouyinFavoriteListRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	if !issetUserID {
 		fieldId = 1
-		goto RequiredFieldNotSetError
-	}
-
-	if !issetToken {
-		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -5492,15 +5094,6 @@ func (p *DouyinFavoriteListRequest) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DouyinFavoriteListRequest) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Token = v
-	}
-	return nil
-}
-
 func (p *DouyinFavoriteListRequest) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("douyin_favorite_list_request"); err != nil {
@@ -5509,10 +5102,6 @@ func (p *DouyinFavoriteListRequest) Write(oprot thrift.TProtocol) (err error) {
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
 			goto WriteFieldError
 		}
 
@@ -5549,23 +5138,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *DouyinFavoriteListRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("token", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Token); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
 func (p *DouyinFavoriteListRequest) String() string {
@@ -5802,10 +5374,9 @@ func (p *DouyinFavoriteListResponse) String() string {
 
 // RELATION
 type DouyinRelationActionRequest struct {
-	UserID     int64  `thrift:"user_id,1,required" form:"user_id,required" json:"user_id,required" query:"user_id,required"`
-	Token      string `thrift:"token,2,required" form:"token,required" json:"token,required" query:"token,required"`
-	ToUserID   int64  `thrift:"to_user_id,3,required" form:"to_user_id,required" json:"to_user_id,required" query:"to_user_id,required"`
-	ActionType int32  `thrift:"action_type,4,required" form:"action_type,required" json:"action_type,required" query:"action_type,required"`
+	UserID     int64 `thrift:"user_id,1,required" form:"user_id,required" json:"user_id,required" query:"user_id,required"`
+	ToUserID   int64 `thrift:"to_user_id,2,required" form:"to_user_id,required" json:"to_user_id,required" query:"to_user_id,required"`
+	ActionType int32 `thrift:"action_type,3,required" form:"action_type,required" json:"action_type,required" query:"action_type,required"`
 }
 
 func NewDouyinRelationActionRequest() *DouyinRelationActionRequest {
@@ -5814,10 +5385,6 @@ func NewDouyinRelationActionRequest() *DouyinRelationActionRequest {
 
 func (p *DouyinRelationActionRequest) GetUserID() (v int64) {
 	return p.UserID
-}
-
-func (p *DouyinRelationActionRequest) GetToken() (v string) {
-	return p.Token
 }
 
 func (p *DouyinRelationActionRequest) GetToUserID() (v int64) {
@@ -5830,9 +5397,8 @@ func (p *DouyinRelationActionRequest) GetActionType() (v int32) {
 
 var fieldIDToName_DouyinRelationActionRequest = map[int16]string{
 	1: "user_id",
-	2: "token",
-	3: "to_user_id",
-	4: "action_type",
+	2: "to_user_id",
+	3: "action_type",
 }
 
 func (p *DouyinRelationActionRequest) Read(iprot thrift.TProtocol) (err error) {
@@ -5840,7 +5406,6 @@ func (p *DouyinRelationActionRequest) Read(iprot thrift.TProtocol) (err error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 	var issetUserID bool = false
-	var issetToken bool = false
 	var issetToUserID bool = false
 	var issetActionType bool = false
 
@@ -5870,19 +5435,8 @@ func (p *DouyinRelationActionRequest) Read(iprot thrift.TProtocol) (err error) {
 				}
 			}
 		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetToken = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 3:
 			if fieldTypeId == thrift.I64 {
-				if err = p.ReadField3(iprot); err != nil {
+				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
 				issetToUserID = true
@@ -5891,9 +5445,9 @@ func (p *DouyinRelationActionRequest) Read(iprot thrift.TProtocol) (err error) {
 					goto SkipFieldError
 				}
 			}
-		case 4:
+		case 3:
 			if fieldTypeId == thrift.I32 {
-				if err = p.ReadField4(iprot); err != nil {
+				if err = p.ReadField3(iprot); err != nil {
 					goto ReadFieldError
 				}
 				issetActionType = true
@@ -5921,18 +5475,13 @@ func (p *DouyinRelationActionRequest) Read(iprot thrift.TProtocol) (err error) {
 		goto RequiredFieldNotSetError
 	}
 
-	if !issetToken {
+	if !issetToUserID {
 		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
 
-	if !issetToUserID {
-		fieldId = 3
-		goto RequiredFieldNotSetError
-	}
-
 	if !issetActionType {
-		fieldId = 4
+		fieldId = 3
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -5963,15 +5512,6 @@ func (p *DouyinRelationActionRequest) ReadField1(iprot thrift.TProtocol) error {
 }
 
 func (p *DouyinRelationActionRequest) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Token = v
-	}
-	return nil
-}
-
-func (p *DouyinRelationActionRequest) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
@@ -5980,7 +5520,7 @@ func (p *DouyinRelationActionRequest) ReadField3(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DouyinRelationActionRequest) ReadField4(iprot thrift.TProtocol) error {
+func (p *DouyinRelationActionRequest) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
@@ -6005,10 +5545,6 @@ func (p *DouyinRelationActionRequest) Write(oprot thrift.TProtocol) (err error) 
 		}
 		if err = p.writeField3(oprot); err != nil {
 			fieldId = 3
-			goto WriteFieldError
-		}
-		if err = p.writeField4(oprot); err != nil {
-			fieldId = 4
 			goto WriteFieldError
 		}
 
@@ -6048,10 +5584,10 @@ WriteFieldEndError:
 }
 
 func (p *DouyinRelationActionRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("token", thrift.STRING, 2); err != nil {
+	if err = oprot.WriteFieldBegin("to_user_id", thrift.I64, 2); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Token); err != nil {
+	if err := oprot.WriteI64(p.ToUserID); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -6065,24 +5601,7 @@ WriteFieldEndError:
 }
 
 func (p *DouyinRelationActionRequest) writeField3(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("to_user_id", thrift.I64, 3); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteI64(p.ToUserID); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
-}
-
-func (p *DouyinRelationActionRequest) writeField4(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("action_type", thrift.I32, 4); err != nil {
+	if err = oprot.WriteFieldBegin("action_type", thrift.I32, 3); err != nil {
 		goto WriteFieldBeginError
 	}
 	if err := oprot.WriteI32(p.ActionType); err != nil {
@@ -6093,9 +5612,9 @@ func (p *DouyinRelationActionRequest) writeField4(oprot thrift.TProtocol) (err e
 	}
 	return nil
 WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 4 begin error: ", p), err)
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
 WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
 }
 
 func (p *DouyinRelationActionRequest) String() string {
@@ -6251,8 +5770,7 @@ func (p *DouyinRelationActionResponse) String() string {
 }
 
 type DouyinRelationFollowListRequest struct {
-	UserID int64  `thrift:"user_id,1,required" form:"user_id,required" json:"user_id,required" query:"user_id,required"`
-	Token  string `thrift:"token,2,required" form:"token,required" json:"token,required" query:"token,required"`
+	UserID int64 `thrift:"user_id,1,required" form:"user_id,required" json:"user_id,required" query:"user_id,required"`
 }
 
 func NewDouyinRelationFollowListRequest() *DouyinRelationFollowListRequest {
@@ -6263,13 +5781,8 @@ func (p *DouyinRelationFollowListRequest) GetUserID() (v int64) {
 	return p.UserID
 }
 
-func (p *DouyinRelationFollowListRequest) GetToken() (v string) {
-	return p.Token
-}
-
 var fieldIDToName_DouyinRelationFollowListRequest = map[int16]string{
 	1: "user_id",
-	2: "token",
 }
 
 func (p *DouyinRelationFollowListRequest) Read(iprot thrift.TProtocol) (err error) {
@@ -6277,7 +5790,6 @@ func (p *DouyinRelationFollowListRequest) Read(iprot thrift.TProtocol) (err erro
 	var fieldTypeId thrift.TType
 	var fieldId int16
 	var issetUserID bool = false
-	var issetToken bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -6304,17 +5816,6 @@ func (p *DouyinRelationFollowListRequest) Read(iprot thrift.TProtocol) (err erro
 					goto SkipFieldError
 				}
 			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetToken = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
 		default:
 			if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
@@ -6331,11 +5832,6 @@ func (p *DouyinRelationFollowListRequest) Read(iprot thrift.TProtocol) (err erro
 
 	if !issetUserID {
 		fieldId = 1
-		goto RequiredFieldNotSetError
-	}
-
-	if !issetToken {
-		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -6365,15 +5861,6 @@ func (p *DouyinRelationFollowListRequest) ReadField1(iprot thrift.TProtocol) err
 	return nil
 }
 
-func (p *DouyinRelationFollowListRequest) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Token = v
-	}
-	return nil
-}
-
 func (p *DouyinRelationFollowListRequest) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("douyin_relation_follow_list_request"); err != nil {
@@ -6382,10 +5869,6 @@ func (p *DouyinRelationFollowListRequest) Write(oprot thrift.TProtocol) (err err
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
 			goto WriteFieldError
 		}
 
@@ -6422,23 +5905,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *DouyinRelationFollowListRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("token", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Token); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
 func (p *DouyinRelationFollowListRequest) String() string {
@@ -6667,8 +6133,7 @@ func (p *DouyinRelationFollowListResponse) String() string {
 }
 
 type DouyinRelationFollowerListRequest struct {
-	UserID int64  `thrift:"user_id,1,required" form:"user_id,required" json:"user_id,required" query:"user_id,required"`
-	Token  string `thrift:"token,2,required" form:"token,required" json:"token,required" query:"token,required"`
+	UserID int64 `thrift:"user_id,1,required" form:"user_id,required" json:"user_id,required" query:"user_id,required"`
 }
 
 func NewDouyinRelationFollowerListRequest() *DouyinRelationFollowerListRequest {
@@ -6679,13 +6144,8 @@ func (p *DouyinRelationFollowerListRequest) GetUserID() (v int64) {
 	return p.UserID
 }
 
-func (p *DouyinRelationFollowerListRequest) GetToken() (v string) {
-	return p.Token
-}
-
 var fieldIDToName_DouyinRelationFollowerListRequest = map[int16]string{
 	1: "user_id",
-	2: "token",
 }
 
 func (p *DouyinRelationFollowerListRequest) Read(iprot thrift.TProtocol) (err error) {
@@ -6693,7 +6153,6 @@ func (p *DouyinRelationFollowerListRequest) Read(iprot thrift.TProtocol) (err er
 	var fieldTypeId thrift.TType
 	var fieldId int16
 	var issetUserID bool = false
-	var issetToken bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -6720,17 +6179,6 @@ func (p *DouyinRelationFollowerListRequest) Read(iprot thrift.TProtocol) (err er
 					goto SkipFieldError
 				}
 			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetToken = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
 		default:
 			if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
@@ -6747,11 +6195,6 @@ func (p *DouyinRelationFollowerListRequest) Read(iprot thrift.TProtocol) (err er
 
 	if !issetUserID {
 		fieldId = 1
-		goto RequiredFieldNotSetError
-	}
-
-	if !issetToken {
-		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -6781,15 +6224,6 @@ func (p *DouyinRelationFollowerListRequest) ReadField1(iprot thrift.TProtocol) e
 	return nil
 }
 
-func (p *DouyinRelationFollowerListRequest) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Token = v
-	}
-	return nil
-}
-
 func (p *DouyinRelationFollowerListRequest) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("douyin_relation_follower_list_request"); err != nil {
@@ -6798,10 +6232,6 @@ func (p *DouyinRelationFollowerListRequest) Write(oprot thrift.TProtocol) (err e
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
 			goto WriteFieldError
 		}
 
@@ -6838,23 +6268,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *DouyinRelationFollowerListRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("token", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Token); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
 func (p *DouyinRelationFollowerListRequest) String() string {

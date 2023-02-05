@@ -3,6 +3,7 @@
 package Api
 
 import (
+	"ByteTech-7815/douyin-zhgg/cmd/api/biz/middleware"
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
@@ -157,8 +158,9 @@ func _userMw() []app.HandlerFunc {
 }
 
 func _userinfoMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{
+		middleware.JwtMiddleware.MiddlewareFunc(),
+	}
 }
 
 func _loginMw() []app.HandlerFunc {

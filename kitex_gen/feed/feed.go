@@ -900,8 +900,7 @@ func (p *BaseResp) Field2DeepEqual(src *string) bool {
 }
 
 type DouyinFeedRequest struct {
-	LatestTime *int64  `thrift:"latest_time,1,optional" frugal:"1,optional,i64" json:"latest_time,omitempty"`
-	Token      *string `thrift:"token,2,optional" frugal:"2,optional,string" json:"token,omitempty"`
+	LatestTime *int64 `thrift:"latest_time,1,optional" frugal:"1,optional,i64" json:"latest_time,omitempty"`
 }
 
 func NewDouyinFeedRequest() *DouyinFeedRequest {
@@ -920,33 +919,16 @@ func (p *DouyinFeedRequest) GetLatestTime() (v int64) {
 	}
 	return *p.LatestTime
 }
-
-var DouyinFeedRequest_Token_DEFAULT string
-
-func (p *DouyinFeedRequest) GetToken() (v string) {
-	if !p.IsSetToken() {
-		return DouyinFeedRequest_Token_DEFAULT
-	}
-	return *p.Token
-}
 func (p *DouyinFeedRequest) SetLatestTime(val *int64) {
 	p.LatestTime = val
-}
-func (p *DouyinFeedRequest) SetToken(val *string) {
-	p.Token = val
 }
 
 var fieldIDToName_DouyinFeedRequest = map[int16]string{
 	1: "latest_time",
-	2: "token",
 }
 
 func (p *DouyinFeedRequest) IsSetLatestTime() bool {
 	return p.LatestTime != nil
-}
-
-func (p *DouyinFeedRequest) IsSetToken() bool {
-	return p.Token != nil
 }
 
 func (p *DouyinFeedRequest) Read(iprot thrift.TProtocol) (err error) {
@@ -971,16 +953,6 @@ func (p *DouyinFeedRequest) Read(iprot thrift.TProtocol) (err error) {
 		case 1:
 			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else {
@@ -1027,15 +999,6 @@ func (p *DouyinFeedRequest) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DouyinFeedRequest) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Token = &v
-	}
-	return nil
-}
-
 func (p *DouyinFeedRequest) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("douyin_feed_request"); err != nil {
@@ -1044,10 +1007,6 @@ func (p *DouyinFeedRequest) Write(oprot thrift.TProtocol) (err error) {
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
 			goto WriteFieldError
 		}
 
@@ -1088,25 +1047,6 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *DouyinFeedRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if p.IsSetToken() {
-		if err = oprot.WriteFieldBegin("token", thrift.STRING, 2); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := oprot.WriteString(*p.Token); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
-}
-
 func (p *DouyinFeedRequest) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1123,9 +1063,6 @@ func (p *DouyinFeedRequest) DeepEqual(ano *DouyinFeedRequest) bool {
 	if !p.Field1DeepEqual(ano.LatestTime) {
 		return false
 	}
-	if !p.Field2DeepEqual(ano.Token) {
-		return false
-	}
 	return true
 }
 
@@ -1137,18 +1074,6 @@ func (p *DouyinFeedRequest) Field1DeepEqual(src *int64) bool {
 		return false
 	}
 	if *p.LatestTime != *src {
-		return false
-	}
-	return true
-}
-func (p *DouyinFeedRequest) Field2DeepEqual(src *string) bool {
-
-	if p.Token == src {
-		return true
-	} else if p.Token == nil || src == nil {
-		return false
-	}
-	if strings.Compare(*p.Token, *src) != 0 {
 		return false
 	}
 	return true

@@ -10,7 +10,6 @@ struct BaseResp {
 
 struct douyin_relation_action_request {
     1:required i64 user_id // 用户id
-    2:required string token // 用户鉴权token
     3:required i64 to_user_id // 对方用户id
     4:required i32 action_type // 1-关注，2-取消关注
 }
@@ -21,7 +20,6 @@ struct douyin_relation_action_response {
 
 struct douyin_relation_follow_list_request {
     1:required i64 user_id // 用户id
-    2:required string token // 用户鉴权token
 }
 
 struct douyin_relation_follow_list_response {
@@ -30,13 +28,12 @@ struct douyin_relation_follow_list_response {
 }
 
 struct douyin_relation_follower_list_request {
-        1:required i64 user_id // 用户id
-        2:required string token // 用户鉴权token
+    1:required i64 user_id // 用户id
 }
 
 struct douyin_relation_follower_list_response {
     1:required list<user.User> user_list // 用户列表
-        2:BaseResp base_resp
+    2:BaseResp base_resp
 }
 
 service RelationService {

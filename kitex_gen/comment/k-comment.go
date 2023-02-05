@@ -520,7 +520,6 @@ func (p *DouyinCommentActionRequest) FastRead(buf []byte) (int, error) {
 	var l int
 	var fieldTypeId thrift.TType
 	var fieldId int16
-	var issetToken bool = false
 	var issetVideoId bool = false
 	var issetActionType bool = false
 	_, l, err = bthrift.Binary.ReadStructBegin(buf)
@@ -540,23 +539,8 @@ func (p *DouyinCommentActionRequest) FastRead(buf []byte) (int, error) {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRING {
-				l, err = p.FastReadField1(buf[offset:])
-				offset += l
-				if err != nil {
-					goto ReadFieldError
-				}
-				issetToken = true
-			} else {
-				l, err = bthrift.Binary.Skip(buf[offset:], fieldTypeId)
-				offset += l
-				if err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 2:
 			if fieldTypeId == thrift.I64 {
-				l, err = p.FastReadField2(buf[offset:])
+				l, err = p.FastReadField1(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -569,9 +553,9 @@ func (p *DouyinCommentActionRequest) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
-		case 3:
+		case 2:
 			if fieldTypeId == thrift.I32 {
-				l, err = p.FastReadField3(buf[offset:])
+				l, err = p.FastReadField2(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -584,9 +568,9 @@ func (p *DouyinCommentActionRequest) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
-		case 4:
+		case 3:
 			if fieldTypeId == thrift.STRING {
-				l, err = p.FastReadField4(buf[offset:])
+				l, err = p.FastReadField3(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -598,9 +582,9 @@ func (p *DouyinCommentActionRequest) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
-		case 5:
+		case 4:
 			if fieldTypeId == thrift.I64 {
-				l, err = p.FastReadField5(buf[offset:])
+				l, err = p.FastReadField4(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -632,18 +616,13 @@ func (p *DouyinCommentActionRequest) FastRead(buf []byte) (int, error) {
 		goto ReadStructEndError
 	}
 
-	if !issetToken {
+	if !issetVideoId {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
 
-	if !issetVideoId {
-		fieldId = 2
-		goto RequiredFieldNotSetError
-	}
-
 	if !issetActionType {
-		fieldId = 3
+		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
 	return offset, nil
@@ -666,20 +645,6 @@ RequiredFieldNotSetError:
 func (p *DouyinCommentActionRequest) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
-	if v, l, err := bthrift.Binary.ReadString(buf[offset:]); err != nil {
-		return offset, err
-	} else {
-		offset += l
-
-		p.Token = v
-
-	}
-	return offset, nil
-}
-
-func (p *DouyinCommentActionRequest) FastReadField2(buf []byte) (int, error) {
-	offset := 0
-
 	if v, l, err := bthrift.Binary.ReadI64(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -691,7 +656,7 @@ func (p *DouyinCommentActionRequest) FastReadField2(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *DouyinCommentActionRequest) FastReadField3(buf []byte) (int, error) {
+func (p *DouyinCommentActionRequest) FastReadField2(buf []byte) (int, error) {
 	offset := 0
 
 	if v, l, err := bthrift.Binary.ReadI32(buf[offset:]); err != nil {
@@ -705,7 +670,7 @@ func (p *DouyinCommentActionRequest) FastReadField3(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *DouyinCommentActionRequest) FastReadField4(buf []byte) (int, error) {
+func (p *DouyinCommentActionRequest) FastReadField3(buf []byte) (int, error) {
 	offset := 0
 
 	if v, l, err := bthrift.Binary.ReadString(buf[offset:]); err != nil {
@@ -718,7 +683,7 @@ func (p *DouyinCommentActionRequest) FastReadField4(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *DouyinCommentActionRequest) FastReadField5(buf []byte) (int, error) {
+func (p *DouyinCommentActionRequest) FastReadField4(buf []byte) (int, error) {
 	offset := 0
 
 	if v, l, err := bthrift.Binary.ReadI64(buf[offset:]); err != nil {
@@ -740,11 +705,10 @@ func (p *DouyinCommentActionRequest) FastWriteNocopy(buf []byte, binaryWriter bt
 	offset := 0
 	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "douyin_comment_action_request")
 	if p != nil {
-		offset += p.fastWriteField2(buf[offset:], binaryWriter)
-		offset += p.fastWriteField3(buf[offset:], binaryWriter)
-		offset += p.fastWriteField5(buf[offset:], binaryWriter)
 		offset += p.fastWriteField1(buf[offset:], binaryWriter)
+		offset += p.fastWriteField2(buf[offset:], binaryWriter)
 		offset += p.fastWriteField4(buf[offset:], binaryWriter)
+		offset += p.fastWriteField3(buf[offset:], binaryWriter)
 	}
 	offset += bthrift.Binary.WriteFieldStop(buf[offset:])
 	offset += bthrift.Binary.WriteStructEnd(buf[offset:])
@@ -759,7 +723,6 @@ func (p *DouyinCommentActionRequest) BLength() int {
 		l += p.field2Length()
 		l += p.field3Length()
 		l += p.field4Length()
-		l += p.field5Length()
 	}
 	l += bthrift.Binary.FieldStopLength()
 	l += bthrift.Binary.StructEndLength()
@@ -768,8 +731,8 @@ func (p *DouyinCommentActionRequest) BLength() int {
 
 func (p *DouyinCommentActionRequest) fastWriteField1(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "token", thrift.STRING, 1)
-	offset += bthrift.Binary.WriteStringNocopy(buf[offset:], binaryWriter, p.Token)
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "video_id", thrift.I64, 1)
+	offset += bthrift.Binary.WriteI64(buf[offset:], p.VideoId)
 
 	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
 	return offset
@@ -777,8 +740,8 @@ func (p *DouyinCommentActionRequest) fastWriteField1(buf []byte, binaryWriter bt
 
 func (p *DouyinCommentActionRequest) fastWriteField2(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "video_id", thrift.I64, 2)
-	offset += bthrift.Binary.WriteI64(buf[offset:], p.VideoId)
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "action_type", thrift.I32, 2)
+	offset += bthrift.Binary.WriteI32(buf[offset:], p.ActionType)
 
 	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
 	return offset
@@ -786,17 +749,8 @@ func (p *DouyinCommentActionRequest) fastWriteField2(buf []byte, binaryWriter bt
 
 func (p *DouyinCommentActionRequest) fastWriteField3(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "action_type", thrift.I32, 3)
-	offset += bthrift.Binary.WriteI32(buf[offset:], p.ActionType)
-
-	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
-	return offset
-}
-
-func (p *DouyinCommentActionRequest) fastWriteField4(buf []byte, binaryWriter bthrift.BinaryWriter) int {
-	offset := 0
 	if p.IsSetCommentText() {
-		offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "comment_text", thrift.STRING, 4)
+		offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "comment_text", thrift.STRING, 3)
 		offset += bthrift.Binary.WriteStringNocopy(buf[offset:], binaryWriter, *p.CommentText)
 
 		offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
@@ -804,10 +758,10 @@ func (p *DouyinCommentActionRequest) fastWriteField4(buf []byte, binaryWriter bt
 	return offset
 }
 
-func (p *DouyinCommentActionRequest) fastWriteField5(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+func (p *DouyinCommentActionRequest) fastWriteField4(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
 	if p.IsSetCommentId() {
-		offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "comment_id", thrift.I64, 5)
+		offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "comment_id", thrift.I64, 4)
 		offset += bthrift.Binary.WriteI64(buf[offset:], *p.CommentId)
 
 		offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
@@ -817,8 +771,8 @@ func (p *DouyinCommentActionRequest) fastWriteField5(buf []byte, binaryWriter bt
 
 func (p *DouyinCommentActionRequest) field1Length() int {
 	l := 0
-	l += bthrift.Binary.FieldBeginLength("token", thrift.STRING, 1)
-	l += bthrift.Binary.StringLengthNocopy(p.Token)
+	l += bthrift.Binary.FieldBeginLength("video_id", thrift.I64, 1)
+	l += bthrift.Binary.I64Length(p.VideoId)
 
 	l += bthrift.Binary.FieldEndLength()
 	return l
@@ -826,8 +780,8 @@ func (p *DouyinCommentActionRequest) field1Length() int {
 
 func (p *DouyinCommentActionRequest) field2Length() int {
 	l := 0
-	l += bthrift.Binary.FieldBeginLength("video_id", thrift.I64, 2)
-	l += bthrift.Binary.I64Length(p.VideoId)
+	l += bthrift.Binary.FieldBeginLength("action_type", thrift.I32, 2)
+	l += bthrift.Binary.I32Length(p.ActionType)
 
 	l += bthrift.Binary.FieldEndLength()
 	return l
@@ -835,17 +789,8 @@ func (p *DouyinCommentActionRequest) field2Length() int {
 
 func (p *DouyinCommentActionRequest) field3Length() int {
 	l := 0
-	l += bthrift.Binary.FieldBeginLength("action_type", thrift.I32, 3)
-	l += bthrift.Binary.I32Length(p.ActionType)
-
-	l += bthrift.Binary.FieldEndLength()
-	return l
-}
-
-func (p *DouyinCommentActionRequest) field4Length() int {
-	l := 0
 	if p.IsSetCommentText() {
-		l += bthrift.Binary.FieldBeginLength("comment_text", thrift.STRING, 4)
+		l += bthrift.Binary.FieldBeginLength("comment_text", thrift.STRING, 3)
 		l += bthrift.Binary.StringLengthNocopy(*p.CommentText)
 
 		l += bthrift.Binary.FieldEndLength()
@@ -853,10 +798,10 @@ func (p *DouyinCommentActionRequest) field4Length() int {
 	return l
 }
 
-func (p *DouyinCommentActionRequest) field5Length() int {
+func (p *DouyinCommentActionRequest) field4Length() int {
 	l := 0
 	if p.IsSetCommentId() {
-		l += bthrift.Binary.FieldBeginLength("comment_id", thrift.I64, 5)
+		l += bthrift.Binary.FieldBeginLength("comment_id", thrift.I64, 4)
 		l += bthrift.Binary.I64Length(*p.CommentId)
 
 		l += bthrift.Binary.FieldEndLength()
@@ -1046,7 +991,6 @@ func (p *DouyinCommentListRequest) FastRead(buf []byte) (int, error) {
 	var l int
 	var fieldTypeId thrift.TType
 	var fieldId int16
-	var issetToken bool = false
 	var issetVideoId bool = false
 	_, l, err = bthrift.Binary.ReadStructBegin(buf)
 	offset += l
@@ -1065,23 +1009,8 @@ func (p *DouyinCommentListRequest) FastRead(buf []byte) (int, error) {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRING {
-				l, err = p.FastReadField1(buf[offset:])
-				offset += l
-				if err != nil {
-					goto ReadFieldError
-				}
-				issetToken = true
-			} else {
-				l, err = bthrift.Binary.Skip(buf[offset:], fieldTypeId)
-				offset += l
-				if err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 2:
 			if fieldTypeId == thrift.I64 {
-				l, err = p.FastReadField2(buf[offset:])
+				l, err = p.FastReadField1(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -1114,13 +1043,8 @@ func (p *DouyinCommentListRequest) FastRead(buf []byte) (int, error) {
 		goto ReadStructEndError
 	}
 
-	if !issetToken {
-		fieldId = 1
-		goto RequiredFieldNotSetError
-	}
-
 	if !issetVideoId {
-		fieldId = 2
+		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
 	return offset, nil
@@ -1143,20 +1067,6 @@ RequiredFieldNotSetError:
 func (p *DouyinCommentListRequest) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
-	if v, l, err := bthrift.Binary.ReadString(buf[offset:]); err != nil {
-		return offset, err
-	} else {
-		offset += l
-
-		p.Token = v
-
-	}
-	return offset, nil
-}
-
-func (p *DouyinCommentListRequest) FastReadField2(buf []byte) (int, error) {
-	offset := 0
-
 	if v, l, err := bthrift.Binary.ReadI64(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -1177,7 +1087,6 @@ func (p *DouyinCommentListRequest) FastWriteNocopy(buf []byte, binaryWriter bthr
 	offset := 0
 	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "douyin_comment_list_request")
 	if p != nil {
-		offset += p.fastWriteField2(buf[offset:], binaryWriter)
 		offset += p.fastWriteField1(buf[offset:], binaryWriter)
 	}
 	offset += bthrift.Binary.WriteFieldStop(buf[offset:])
@@ -1190,7 +1099,6 @@ func (p *DouyinCommentListRequest) BLength() int {
 	l += bthrift.Binary.StructBeginLength("douyin_comment_list_request")
 	if p != nil {
 		l += p.field1Length()
-		l += p.field2Length()
 	}
 	l += bthrift.Binary.FieldStopLength()
 	l += bthrift.Binary.StructEndLength()
@@ -1199,16 +1107,7 @@ func (p *DouyinCommentListRequest) BLength() int {
 
 func (p *DouyinCommentListRequest) fastWriteField1(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "token", thrift.STRING, 1)
-	offset += bthrift.Binary.WriteStringNocopy(buf[offset:], binaryWriter, p.Token)
-
-	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
-	return offset
-}
-
-func (p *DouyinCommentListRequest) fastWriteField2(buf []byte, binaryWriter bthrift.BinaryWriter) int {
-	offset := 0
-	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "video_id", thrift.I64, 2)
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "video_id", thrift.I64, 1)
 	offset += bthrift.Binary.WriteI64(buf[offset:], p.VideoId)
 
 	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
@@ -1217,16 +1116,7 @@ func (p *DouyinCommentListRequest) fastWriteField2(buf []byte, binaryWriter bthr
 
 func (p *DouyinCommentListRequest) field1Length() int {
 	l := 0
-	l += bthrift.Binary.FieldBeginLength("token", thrift.STRING, 1)
-	l += bthrift.Binary.StringLengthNocopy(p.Token)
-
-	l += bthrift.Binary.FieldEndLength()
-	return l
-}
-
-func (p *DouyinCommentListRequest) field2Length() int {
-	l := 0
-	l += bthrift.Binary.FieldBeginLength("video_id", thrift.I64, 2)
+	l += bthrift.Binary.FieldBeginLength("video_id", thrift.I64, 1)
 	l += bthrift.Binary.I64Length(p.VideoId)
 
 	l += bthrift.Binary.FieldEndLength()

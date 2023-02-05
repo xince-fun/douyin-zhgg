@@ -62,7 +62,6 @@ struct douyin_user_login_response {
 // 用户信息
 struct douyin_user_request {
     1: required i64 user_id ( api.query="user_id" ),   // 用户id
-    2: required string token,  // 用户鉴权token
 }
 
 struct douyin_user_response {
@@ -75,7 +74,6 @@ struct douyin_user_response {
 // 视频流接口
 struct douyin_feed_request {
     1: optional i64 latest_time,        // 可选参数，限制返回视频的最新投稿时间戳，精确到秒，不填表示当前时间
-    2: optional string token,           // 可选参数，登录用户设置
 }
 
 struct douyin_feed_response {
@@ -88,9 +86,8 @@ struct douyin_feed_response {
 
 // 视频投稿
 struct douyin_publish_action_request {
-    1: required string token,                       // 用户鉴权token
-    2: required binary data,                        // 视频数据
-    3: required string title ( api.form="title", api.vd="len($) > 0" ), // 视频标题
+    1: required binary data,                        // 视频数据
+    2: required string title ( api.form="title", api.vd="len($) > 0" ), // 视频标题
 }
 
 struct douyin_publish_action_response {
@@ -100,7 +97,6 @@ struct douyin_publish_action_response {
 // 发布列表
 struct douyin_publish_list_request {
     1: required i64 user_id ( vt.gt = "0" ), // 用户id
-    2: required string token,                // 用户鉴权token
 }
 
 struct douyin_publish_list_response {
@@ -111,11 +107,10 @@ struct douyin_publish_list_response {
 // Comment
 
 struct douyin_comment_action_request {
-    1:required string token // 用户鉴权token
-    2:required i64 video_id // 视频id
-    3:required i32 action_type // 1-发布评论，2-删除评论
-    4:optional string comment_text // 用户填写的评论内容，在action_type=1的时候使用
-    5:optional i64 comment_id // 要删除的评论id，在action_type=2的时候使用
+    1:required i64 video_id // 视频id
+    2:required i32 action_type // 1-发布评论，2-删除评论
+    3:optional string comment_text // 用户填写的评论内容，在action_type=1的时候使用
+    4:optional i64 comment_id // 要删除的评论id，在action_type=2的时候使用
 }
 
 struct douyin_comment_action_response {
@@ -124,8 +119,7 @@ struct douyin_comment_action_response {
 }
 
 struct douyin_comment_list_request {
-    1:required string token // 用户鉴权token
-    2:required i64 video_id // 视频id
+    1:required i64 video_id // 视频id
 }
 
 struct douyin_comment_list_response {
@@ -135,9 +129,8 @@ struct douyin_comment_list_response {
 // FAVORITE
 
 struct douyin_favorite_action_request {
-    1: required string token,    // 用户鉴权token
-    2: required i64 video_id,    // 视频id
-    3: required i32 action_type, // 1-点赞，2-取消点赞
+    1: required i64 video_id,    // 视频id
+    2: required i32 action_type, // 1-点赞，2-取消点赞
 }
 
 struct douyin_favorite_action_response {
@@ -146,7 +139,6 @@ struct douyin_favorite_action_response {
 
 struct douyin_favorite_list_request {
     1: required i64 user_id,  // 用户id
-    2: required string token, // 用户鉴权token
 }
 
 struct douyin_favorite_list_response {
@@ -158,9 +150,8 @@ struct douyin_favorite_list_response {
 
 struct douyin_relation_action_request {
     1:required i64 user_id // 用户id
-    2:required string token // 用户鉴权token
-    3:required i64 to_user_id // 对方用户id
-    4:required i32 action_type // 1-关注，2-取消关注
+    2:required i64 to_user_id // 对方用户id
+    3:required i32 action_type // 1-关注，2-取消关注
 }
 
 struct douyin_relation_action_response {
@@ -169,7 +160,6 @@ struct douyin_relation_action_response {
 
 struct douyin_relation_follow_list_request {
     1:required i64 user_id // 用户id
-    2:required string token // 用户鉴权token
 }
 
 struct douyin_relation_follow_list_response {
@@ -178,13 +168,12 @@ struct douyin_relation_follow_list_response {
 }
 
 struct douyin_relation_follower_list_request {
-        1:required i64 user_id // 用户id
-        2:required string token // 用户鉴权token
+    1:required i64 user_id // 用户id
 }
 
 struct douyin_relation_follower_list_response {
     1:required list<User> user_list // 用户列表
-        2:BaseResp base_resp
+    2:BaseResp base_resp
 }
 
 service ApiService {
