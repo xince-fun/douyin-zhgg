@@ -187,8 +187,13 @@ func RelationAction(ctx context.Context, c *app.RequestContext) {
 		handler.SendResponse(c, errno.ConvertErr(err))
 		return
 	}
+	userId, err := middleware.JwtMiddleware.Authenticator(ctx, c)
+	if err != nil {
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
 	err = rpc.RelationAction(ctx, &relation.DouyinRelationActionRequest{
-		UserId:     req.UserID,
+		UserId:     userId.(int64),
 		Token:      req.Token,
 		ToUserId:   req.ToUserID,
 		ActionType: req.ActionType,

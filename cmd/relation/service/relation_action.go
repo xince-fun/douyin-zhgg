@@ -6,6 +6,11 @@ import (
 	"context"
 )
 
+const (
+	addFollow    = 1
+	cancelFollow = 2
+)
+
 type RelationActionService struct {
 	ctx context.Context
 }
@@ -16,10 +21,14 @@ func NewRelationActionService(ctx context.Context) *RelationActionService {
 }
 
 func (s *RelationActionService) RelationAction(req *relation.DouyinRelationActionRequest) error {
-	// 检查是否已经关注
-	if db.IsFollowing(s.ctx, req.UserId, req.ToUserId) == false {
-		// 未关注， 则添加关注
-		return db.CreateFollow(s.ctx, req.UserId, req.ToUserId)
+	if req.ActionType == addFollow {
+		if db.IsFollowing(s.ctx, req.UserId, req.ToUserId) == false {
+			return db.CreateFollow(s.ctx, req.UserId, req.ToUserId)
+		}
+	} else if req.ActionType == cancelFollow {
+		if db.IsFollowing(s.ctx, req.UserId, req.ToUserId) == true {
+			return db.DeleteFollow(s.ctx, req.UserId, req.ToUserId)
+		}
 	}
 	return nil
 }
