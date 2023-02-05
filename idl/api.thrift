@@ -203,7 +203,7 @@ service ApiService {
     douyin_comment_list_response CommentList(1: douyin_comment_list_request req) (api.get="/douyin/comment/list/")
 
     // social service
-    douyin_relation_action_response RelationAction(1: douyin_relation_action_request req) (api.get="/douyin/relation/action/")
+    douyin_relation_action_response RelationAction(1: douyin_relation_action_request req) (api.post="/douyin/relation/action/")
     douyin_relation_follow_list_response RelationFollowList(1: douyin_relation_follow_list_request req) (api.get="/douyin/relatioin/follow/list/")
     douyin_relation_follower_list_response RelationFollowerList(1: douyin_relation_follower_list_request req) (api.get="/douyin/relation/follower/list/")
 }
