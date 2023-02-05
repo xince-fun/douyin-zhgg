@@ -181,7 +181,7 @@ go run .
 ```
 
 #### User Info
-```http request
+```
 127.0.0.1:8080/douyin/user/?user_id=8
 ```
 
