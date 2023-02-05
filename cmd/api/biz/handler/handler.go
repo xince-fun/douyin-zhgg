@@ -55,3 +55,11 @@ func SendUserInfoResponse(c *app.RequestContext, err error, user interface{}) {
 		User:       user,
 	})
 }
+
+func SendRelationActionResponse(c *app.RequestContext, err error) {
+	Err := errno.ConvertErr(err)
+	c.JSON(consts.StatusOK, Response{
+		StatusCode: Err.ErrCode,
+		StatusMsg:  Err.ErrMsg,
+	})
+}

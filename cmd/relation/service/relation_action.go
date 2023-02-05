@@ -6,16 +6,16 @@ import (
 	"context"
 )
 
-type FollowService struct {
+type RelationActionService struct {
 	ctx context.Context
 }
 
-// NewFollowService new FollowService
-func NewFollowService(ctx context.Context) *FollowService {
-	return &FollowService{ctx: ctx}
+// NewRelationActionService new RelationActionService
+func NewRelationActionService(ctx context.Context) *RelationActionService {
+	return &RelationActionService{ctx: ctx}
 }
 
-func (s *FollowService) Follow(req *relation.DouyinRelationActionRequest) error {
+func (s *RelationActionService) RelationAction(req *relation.DouyinRelationActionRequest) error {
 	// 检查是否已经关注
 	if db.IsFollowing(s.ctx, req.UserId, req.ToUserId) == false {
 		// 未关注， 则添加关注

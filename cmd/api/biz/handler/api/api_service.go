@@ -7,6 +7,7 @@ import (
 	"ByteTech-7815/douyin-zhgg/cmd/api/biz/middleware"
 	api "ByteTech-7815/douyin-zhgg/cmd/api/biz/model/api"
 	"ByteTech-7815/douyin-zhgg/cmd/api/biz/rpc"
+	"ByteTech-7815/douyin-zhgg/kitex_gen/relation"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/user"
 	"ByteTech-7815/douyin-zhgg/pkg/errno"
 	"context"
@@ -183,13 +184,20 @@ func RelationAction(ctx context.Context, c *app.RequestContext) {
 	var req api.DouyinRelationActionRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		handler.SendResponse(c, errno.ConvertErr(err))
 		return
 	}
-
-	resp := new(api.DouyinRelationActionResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	err = rpc.RelationAction(ctx, &relation.DouyinRelationActionRequest{
+		UserId:     req.UserID,
+		Token:      req.Token,
+		ToUserId:   req.ToUserID,
+		ActionType: req.ActionType,
+	})
+	if err != nil {
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
+	handler.SendResponse(c, errno.Success)
 }
 
 // RelationFollowList .

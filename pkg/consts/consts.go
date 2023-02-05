@@ -20,8 +20,9 @@ const (
 	TokenExpireDuration = time.Hour * 24
 
 	// service name
-	ApiServiceName  = "api"
-	UserServiceName = "user"
+	ApiServiceName      = "api"
+	UserServiceName     = "user"
+	RelationServiceName = "relation"
 
 	TCP = "tcp"
 )
