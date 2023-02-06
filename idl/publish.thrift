@@ -10,8 +10,9 @@ struct BaseResp {
 
 // 视频投稿
 struct douyin_publish_action_request {
-    1: required binary data,                        // 视频数据
-    2: required string title ( vt.min_size = "1" ), // 视频标题
+    1: required i64 user_id ( vt.gt = "0" )
+    2: required binary data,                        // 视频数据
+    3: required string title ( vt.min_size = "1" ), // 视频标题
 }
 
 struct douyin_publish_action_response {

@@ -3125,7 +3125,7 @@ func (p *DouyinFeedResponse) String() string {
 // Rublish
 // 视频投稿
 type DouyinPublishActionRequest struct {
-	Data  []byte `thrift:"data,1,required" form:"data,required" json:"data,required" query:"data,required"`
+	Data  []byte `thrift:"data,1,required" form:"data,required" json:"data,required"`
 	Title string `thrift:"title,2,required" form:"title,required" json:"title,required" vd:"len($) > 0"`
 }
 

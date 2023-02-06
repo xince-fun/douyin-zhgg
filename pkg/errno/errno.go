@@ -43,6 +43,13 @@ var (
 	UserNotExistErr        = NewErrNo(UserNotExistErrCode, "User does not exist")
 	AuthorizationFailedErr = NewErrNo(AuthorizationFailedErrCode, "Authorization failed")
 	TokenInvalidErr        = NewErrNo(TokenInvalidErrCode, "Token invalid")
+
+	PublishVideoToPublicErr = NewErrNo(PublishVideoToPublicErrCode, "Unable to public video to public")
+	PublishVideoToOssErr    = NewErrNo(PublishVideoToOssErrCode, "Unable to public video to oss")
+	PublishCoverToOssErr    = NewErrNo(PublishCoverToOssErrCode, "Unable to public cover to oss")
+	GetVideoCoverErr        = NewErrNo(GetVideoCoverErrCode, "Unable to get video cover")
+	GetOssVideoUrlErr       = NewErrNo(GetOssVideoUrlErrCode, "Unable to get video url from oss")
+	GetOssCoverUrlErr       = NewErrNo(GetOssCoverUrlErrCode, "Unable to get video cover url from oss")
 )
 
 // ConvertErr convert error to Errno

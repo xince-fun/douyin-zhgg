@@ -22,6 +22,13 @@ const (
 )
 
 // 视频模块
-const ()
+const (
+	PublishVideoToPublicErrCode = 10020
+	PublishVideoToOssErrCode    = 10021
+	PublishCoverToOssErrCode    = 10022
+	GetVideoCoverErrCode        = 10023
+	GetOssVideoUrlErrCode       = 10024
+	GetOssCoverUrlErrCode       = 10025
+)
 
 //

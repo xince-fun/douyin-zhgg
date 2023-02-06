@@ -259,8 +259,9 @@ func (p *BaseResp) Field2DeepEqual(src *string) bool {
 }
 
 type DouyinPublishActionRequest struct {
-	Data  []byte `thrift:"data,1,required" frugal:"1,required,binary" json:"data"`
-	Title string `thrift:"title,2,required" frugal:"2,required,string" json:"title"`
+	UserId int64  `thrift:"user_id,1,required" frugal:"1,required,i64" json:"user_id"`
+	Data   []byte `thrift:"data,2,required" frugal:"2,required,binary" json:"data"`
+	Title  string `thrift:"title,3,required" frugal:"3,required,string" json:"title"`
 }
 
 func NewDouyinPublishActionRequest() *DouyinPublishActionRequest {
@@ -271,12 +272,19 @@ func (p *DouyinPublishActionRequest) InitDefault() {
 	*p = DouyinPublishActionRequest{}
 }
 
+func (p *DouyinPublishActionRequest) GetUserId() (v int64) {
+	return p.UserId
+}
+
 func (p *DouyinPublishActionRequest) GetData() (v []byte) {
 	return p.Data
 }
 
 func (p *DouyinPublishActionRequest) GetTitle() (v string) {
 	return p.Title
+}
+func (p *DouyinPublishActionRequest) SetUserId(val int64) {
+	p.UserId = val
 }
 func (p *DouyinPublishActionRequest) SetData(val []byte) {
 	p.Data = val
@@ -286,14 +294,16 @@ func (p *DouyinPublishActionRequest) SetTitle(val string) {
 }
 
 var fieldIDToName_DouyinPublishActionRequest = map[int16]string{
-	1: "data",
-	2: "title",
+	1: "user_id",
+	2: "data",
+	3: "title",
 }
 
 func (p *DouyinPublishActionRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
+	var issetUserId bool = false
 	var issetData bool = false
 	var issetTitle bool = false
 
@@ -312,11 +322,11 @@ func (p *DouyinPublishActionRequest) Read(iprot thrift.TProtocol) (err error) {
 
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
-				issetData = true
+				issetUserId = true
 			} else {
 				if err = iprot.Skip(fieldTypeId); err != nil {
 					goto SkipFieldError
@@ -325,6 +335,17 @@ func (p *DouyinPublishActionRequest) Read(iprot thrift.TProtocol) (err error) {
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetData = true
+			} else {
+				if err = iprot.Skip(fieldTypeId); err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField3(iprot); err != nil {
 					goto ReadFieldError
 				}
 				issetTitle = true
@@ -347,13 +368,18 @@ func (p *DouyinPublishActionRequest) Read(iprot thrift.TProtocol) (err error) {
 		goto ReadStructEndError
 	}
 
-	if !issetData {
+	if !issetUserId {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
 
-	if !issetTitle {
+	if !issetData {
 		fieldId = 2
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetTitle {
+		fieldId = 3
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -375,6 +401,15 @@ RequiredFieldNotSetError:
 }
 
 func (p *DouyinPublishActionRequest) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		p.UserId = v
+	}
+	return nil
+}
+
+func (p *DouyinPublishActionRequest) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadBinary(); err != nil {
 		return err
 	} else {
@@ -383,7 +418,7 @@ func (p *DouyinPublishActionRequest) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *DouyinPublishActionRequest) ReadField2(iprot thrift.TProtocol) error {
+func (p *DouyinPublishActionRequest) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
@@ -406,6 +441,10 @@ func (p *DouyinPublishActionRequest) Write(oprot thrift.TProtocol) (err error) {
 			fieldId = 2
 			goto WriteFieldError
 		}
+		if err = p.writeField3(oprot); err != nil {
+			fieldId = 3
+			goto WriteFieldError
+		}
 
 	}
 	if err = oprot.WriteFieldStop(); err != nil {
@@ -426,10 +465,10 @@ WriteStructEndError:
 }
 
 func (p *DouyinPublishActionRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("data", thrift.STRING, 1); err != nil {
+	if err = oprot.WriteFieldBegin("user_id", thrift.I64, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteBinary([]byte(p.Data)); err != nil {
+	if err := oprot.WriteI64(p.UserId); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -443,10 +482,10 @@ WriteFieldEndError:
 }
 
 func (p *DouyinPublishActionRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("title", thrift.STRING, 2); err != nil {
+	if err = oprot.WriteFieldBegin("data", thrift.STRING, 2); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Title); err != nil {
+	if err := oprot.WriteBinary([]byte(p.Data)); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -457,6 +496,23 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+
+func (p *DouyinPublishActionRequest) writeField3(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("title", thrift.STRING, 3); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.Title); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
 }
 
 func (p *DouyinPublishActionRequest) String() string {
@@ -472,23 +528,33 @@ func (p *DouyinPublishActionRequest) DeepEqual(ano *DouyinPublishActionRequest) 
 	} else if p == nil || ano == nil {
 		return false
 	}
-	if !p.Field1DeepEqual(ano.Data) {
+	if !p.Field1DeepEqual(ano.UserId) {
 		return false
 	}
-	if !p.Field2DeepEqual(ano.Title) {
+	if !p.Field2DeepEqual(ano.Data) {
+		return false
+	}
+	if !p.Field3DeepEqual(ano.Title) {
 		return false
 	}
 	return true
 }
 
-func (p *DouyinPublishActionRequest) Field1DeepEqual(src []byte) bool {
+func (p *DouyinPublishActionRequest) Field1DeepEqual(src int64) bool {
+
+	if p.UserId != src {
+		return false
+	}
+	return true
+}
+func (p *DouyinPublishActionRequest) Field2DeepEqual(src []byte) bool {
 
 	if bytes.Compare(p.Data, src) != 0 {
 		return false
 	}
 	return true
 }
-func (p *DouyinPublishActionRequest) Field2DeepEqual(src string) bool {
+func (p *DouyinPublishActionRequest) Field3DeepEqual(src string) bool {
 
 	if strings.Compare(p.Title, src) != 0 {
 		return false
