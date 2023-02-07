@@ -9,16 +9,16 @@ import (
 	"context"
 )
 
-type RelationFollowListService struct {
+type RelationFollowerListService struct {
 	ctx context.Context
 }
 
-// NewRelationFollowListService new RelationFollowListService
-func NewRelationFollowListService(ctx context.Context) *RelationFollowListService {
-	return &RelationFollowListService{ctx: ctx}
+// NewRelationFollowerListService new RelationFollowerListService
+func NewRelationFollowerListService(ctx context.Context) *RelationFollowerListService {
+	return &RelationFollowerListService{ctx: ctx}
 }
 
-func (s *RelationFollowListService) RelationFollowList(req *relation.DouyinRelationFollowListRequest) ([]*user.User, error) {
+func (s *RelationFollowerListService) RelationFollowerList(req *relation.DouyinRelationFollowerListRequest) ([]*user.User, error) {
 	userIds := []int64{req.UserId}
 	users, err := db.QueryUserById(s.ctx, userIds)
 	if err != nil {
@@ -28,7 +28,7 @@ func (s *RelationFollowListService) RelationFollowList(req *relation.DouyinRelat
 		return nil, errno.UserNotExistErr
 	}
 	u := users[0]
-	userList, err := db.GetFollowingUsers(s.ctx, int64(u.ID))
+	userList, err := db.GetFansUsers(s.ctx, int64(u.ID))
 	if err != nil {
 		return nil, err
 	}

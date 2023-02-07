@@ -71,7 +71,7 @@ type FollowListResponse struct {
 	FollowList []interface{} `json:"follow_list"`
 }
 
-func SendRelationFollowListResponse(c *app.RequestContext, err error, followList []*user.User) {
+func SendRelationListResponse(c *app.RequestContext, err error, followList []*user.User) {
 	Err := errno.ConvertErr(err)
 	// 把对用户的指针数组转换成interface数组
 	var followListInterface []interface{}

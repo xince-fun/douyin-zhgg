@@ -42,6 +42,7 @@ func (s *RelationServiceImpl) RelationFollowList(ctx context.Context, req *relat
 		resp.BaseResp = pack.BuildBaseResp(err)
 		return resp, nil
 	}
+
 	resp.BaseResp = pack.BuildBaseResp(errno.Success)
 	resp.UserList = userList
 	return resp, nil
@@ -49,6 +50,19 @@ func (s *RelationServiceImpl) RelationFollowList(ctx context.Context, req *relat
 
 // RelationFollowerList implements the RelationServiceImpl interface.
 func (s *RelationServiceImpl) RelationFollowerList(ctx context.Context, req *relation.DouyinRelationFollowerListRequest) (resp *relation.DouyinRelationFollowerListResponse, err error) {
-	// TODO: Your code here...
-	return
+	resp = new(relation.DouyinRelationFollowerListResponse)
+	if err = req.IsValid(); err != nil {
+		resp.BaseResp = pack.BuildBaseResp(errno.ParamErr)
+		return resp, nil
+	}
+
+	userList, err := service.NewRelationFollowerListService(ctx).RelationFollowerList(req)
+	if err != nil {
+		resp.BaseResp = pack.BuildBaseResp(err)
+		return resp, nil
+	}
+
+	resp.BaseResp = pack.BuildBaseResp(errno.Success)
+	resp.UserList = userList
+	return resp, nil
 }

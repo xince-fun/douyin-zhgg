@@ -252,7 +252,7 @@ func RelationFollowList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	handler.SendRelationFollowListResponse(c, errno.Success, list)
+	handler.SendRelationListResponse(c, errno.Success, list)
 }
 
 // RelationFollowerList .
@@ -266,7 +266,13 @@ func RelationFollowerList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(api.DouyinRelationFollowerListResponse)
+	list, err := rpc.RelationFollowerList(ctx, &relation.DouyinRelationFollowerListRequest{
+		UserId: req.UserID,
+	})
+	if err != nil {
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
 
-	c.JSON(consts.StatusOK, resp)
+	handler.SendRelationListResponse(c, errno.Success, list)
 }
