@@ -33,5 +33,8 @@ const (
 	RelationServiceName = "relation"
 	PublishServiceName  = "public"
 
+	//时间字段格式
+	TimeFormat = "2023-02-06 16:25:05"
+
 	TCP = "tcp"
 )
