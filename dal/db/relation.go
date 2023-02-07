@@ -124,3 +124,11 @@ func GetFriendsID(ctx context.Context, userID int64) ([]int64, error) {
 	}
 	return res, nil
 }
+
+func GetFriendsUsers(ctx context.Context, userID int64) ([]*User, error) {
+	friendsIDs, err := GetFriendsID(ctx, userID)
+	if err != nil {
+		klog.Error("error occurred when get friends ids", err)
+	}
+	return QueryUserById(ctx, friendsIDs)
+}

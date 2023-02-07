@@ -32,5 +32,5 @@ func (s *RelationFollowListService) RelationFollowList(req *relation.DouyinRelat
 	if err != nil {
 		return nil, err
 	}
-	return pack.FollowList(userList), nil
+	return pack.UserList(userList), nil
 }

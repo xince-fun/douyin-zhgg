@@ -1,24 +1,24 @@
 package service
 
 import (
+	"ByteTech-7815/douyin-zhgg/cmd/relation/kitex_gen/relation"
 	"ByteTech-7815/douyin-zhgg/dal/db"
 	"ByteTech-7815/douyin-zhgg/dal/pack"
-	"ByteTech-7815/douyin-zhgg/kitex_gen/relation"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/user"
 	"ByteTech-7815/douyin-zhgg/pkg/errno"
 	"context"
 )
 
-type RelationFollowerListService struct {
+type RelationFriendListService struct {
 	ctx context.Context
 }
 
-// NewRelationFollowerListService new RelationFollowerListService
-func NewRelationFollowerListService(ctx context.Context) *RelationFollowerListService {
-	return &RelationFollowerListService{ctx: ctx}
+// NewRelationFriendListService new RelationFriendListService
+func NewRelationFriendListService(ctx context.Context) *RelationFriendListService {
+	return &RelationFriendListService{ctx: ctx}
 }
 
-func (s *RelationFollowerListService) RelationFollowerList(req *relation.DouyinRelationFollowerListRequest) ([]*user.User, error) {
+func (s *RelationFriendListService) RelationFriendList(req *relation.DouyinRelationFriendListRequest) ([]*user.User, error) {
 	userIds := []int64{req.UserId}
 	users, err := db.QueryUserById(s.ctx, userIds)
 	if err != nil {
@@ -28,7 +28,8 @@ func (s *RelationFollowerListService) RelationFollowerList(req *relation.DouyinR
 		return nil, errno.UserNotExistErr
 	}
 	u := users[0]
-	userList, err := db.GetFansUsers(s.ctx, int64(u.ID))
+
+	userList, err := db.GetFriendsUsers(s.ctx, int64(u.ID))
 	if err != nil {
 		return nil, err
 	}

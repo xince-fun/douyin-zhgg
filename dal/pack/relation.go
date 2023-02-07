@@ -3,7 +3,7 @@ package pack
 import "ByteTech-7815/douyin-zhgg/dal/db"
 import "ByteTech-7815/douyin-zhgg/kitex_gen/user"
 
-func FollowList(users []*db.User) []*user.User {
+func UserList(users []*db.User) []*user.User {
 	if users == nil {
 		return nil
 	}
