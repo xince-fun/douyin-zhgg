@@ -26,7 +26,7 @@ https://tlkl01qmcs.feishu.cn/docx/Ap3EdPNM9ofV0axcMyccuNpLnLd
 │   ├── comment
 │   ├── favorite
 │   ├── feed
-│   ├── publish
+│   ├── public
 │   ├── relation
 │   └── user
 ├── docker-compose.yml
@@ -35,14 +35,14 @@ https://tlkl01qmcs.feishu.cn/docx/Ap3EdPNM9ofV0axcMyccuNpLnLd
 │   ├── comment.thrift
 │   ├── favorite.thrift
 │   ├── feed.thrift
-│   ├── publish.thrift
+│   ├── public.thrift
 │   ├── relation.thrift
 │   └── user.thrift
 ├── kitex_gen
 │   ├── comment
 │   ├── favorite
 │   ├── feed
-│   ├── publish
+│   ├── public
 │   ├── relation
 │   └── user
 └── pkg

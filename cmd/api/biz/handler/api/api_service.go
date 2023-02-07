@@ -7,13 +7,16 @@ import (
 	"ByteTech-7815/douyin-zhgg/cmd/api/biz/middleware"
 	api "ByteTech-7815/douyin-zhgg/cmd/api/biz/model/api"
 	"ByteTech-7815/douyin-zhgg/cmd/api/biz/rpc"
+	"ByteTech-7815/douyin-zhgg/kitex_gen/publish"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/relation"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/user"
+	constant "ByteTech-7815/douyin-zhgg/pkg/consts"
 	"ByteTech-7815/douyin-zhgg/pkg/errno"
+	"bytes"
 	"context"
-
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
+	"io"
 )
 
 // GetUserFeed .
@@ -84,16 +87,47 @@ func UserInfo(ctx context.Context, c *app.RequestContext) {
 // @router /douyin/publish/action/ [POST]
 func PublishAction(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req api.DouyinPublishActionRequest
-	err = c.BindAndValidate(&req)
+	data, err := c.FormFile("data")
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
+	title := c.PostForm("title")
+
+	if length := len(title); length <= 0 || length > 128 {
+		handler.SendResponse(c, errno.ParamErr)
 		return
 	}
 
-	resp := new(api.DouyinPublishActionResponse)
+	file, err := data.Open()
+	if err != nil {
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
+	defer file.Close()
+	if err != nil {
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
+	// 处理视频流
+	buf := bytes.NewBuffer(nil)
+	if _, err := io.Copy(buf, file); err != nil {
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
+	video := buf.Bytes()
+	v, _ := c.Get(constant.IdentityKey)
 
-	c.JSON(consts.StatusOK, resp)
+	err = rpc.Publish(context.Background(), &publish.DouyinPublishActionRequest{
+		UserId: v.(*middleware.User).UserId,
+		Data:   video,
+		Title:  title,
+	})
+	if err != nil {
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
+	handler.SendResponse(c, errno.Success)
 }
 
 // PublishList .

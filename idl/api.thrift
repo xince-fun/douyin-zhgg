@@ -86,7 +86,7 @@ struct douyin_feed_response {
 
 // 视频投稿
 struct douyin_publish_action_request {
-    1: required binary data,                        // 视频数据
+    1: required binary data (api.form="data"),                        // 视频数据
     2: required string title ( api.form="title", api.vd="len($) > 0" ), // 视频标题
 }
 

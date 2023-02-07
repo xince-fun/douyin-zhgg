@@ -25,6 +25,9 @@ func (p *BaseResp) IsValid() error {
 	return nil
 }
 func (p *DouyinPublishActionRequest) IsValid() error {
+	if p.UserId <= int64(0) {
+		return fmt.Errorf("field UserId gt rule failed, current value: %v", p.UserId)
+	}
 	if len(p.Title) < int(1) {
 		return fmt.Errorf("field Title min_len rule failed, current value: %d", len(p.Title))
 	}

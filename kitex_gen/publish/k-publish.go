@@ -220,6 +220,7 @@ func (p *DouyinPublishActionRequest) FastRead(buf []byte) (int, error) {
 	var l int
 	var fieldTypeId thrift.TType
 	var fieldId int16
+	var issetUserId bool = false
 	var issetData bool = false
 	var issetTitle bool = false
 	_, l, err = bthrift.Binary.ReadStructBegin(buf)
@@ -239,8 +240,23 @@ func (p *DouyinPublishActionRequest) FastRead(buf []byte) (int, error) {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I64 {
 				l, err = p.FastReadField1(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+				issetUserId = true
+			} else {
+				l, err = bthrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				l, err = p.FastReadField2(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -253,9 +269,9 @@ func (p *DouyinPublishActionRequest) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
-		case 2:
+		case 3:
 			if fieldTypeId == thrift.STRING {
-				l, err = p.FastReadField2(buf[offset:])
+				l, err = p.FastReadField3(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -288,13 +304,18 @@ func (p *DouyinPublishActionRequest) FastRead(buf []byte) (int, error) {
 		goto ReadStructEndError
 	}
 
-	if !issetData {
+	if !issetUserId {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
 
-	if !issetTitle {
+	if !issetData {
 		fieldId = 2
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetTitle {
+		fieldId = 3
 		goto RequiredFieldNotSetError
 	}
 	return offset, nil
@@ -317,6 +338,20 @@ RequiredFieldNotSetError:
 func (p *DouyinPublishActionRequest) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
+	if v, l, err := bthrift.Binary.ReadI64(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+
+		p.UserId = v
+
+	}
+	return offset, nil
+}
+
+func (p *DouyinPublishActionRequest) FastReadField2(buf []byte) (int, error) {
+	offset := 0
+
 	if v, l, err := bthrift.Binary.ReadBinary(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -328,7 +363,7 @@ func (p *DouyinPublishActionRequest) FastReadField1(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *DouyinPublishActionRequest) FastReadField2(buf []byte) (int, error) {
+func (p *DouyinPublishActionRequest) FastReadField3(buf []byte) (int, error) {
 	offset := 0
 
 	if v, l, err := bthrift.Binary.ReadString(buf[offset:]); err != nil {
@@ -353,6 +388,7 @@ func (p *DouyinPublishActionRequest) FastWriteNocopy(buf []byte, binaryWriter bt
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], binaryWriter)
 		offset += p.fastWriteField2(buf[offset:], binaryWriter)
+		offset += p.fastWriteField3(buf[offset:], binaryWriter)
 	}
 	offset += bthrift.Binary.WriteFieldStop(buf[offset:])
 	offset += bthrift.Binary.WriteStructEnd(buf[offset:])
@@ -365,6 +401,7 @@ func (p *DouyinPublishActionRequest) BLength() int {
 	if p != nil {
 		l += p.field1Length()
 		l += p.field2Length()
+		l += p.field3Length()
 	}
 	l += bthrift.Binary.FieldStopLength()
 	l += bthrift.Binary.StructEndLength()
@@ -373,8 +410,8 @@ func (p *DouyinPublishActionRequest) BLength() int {
 
 func (p *DouyinPublishActionRequest) fastWriteField1(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "data", thrift.STRING, 1)
-	offset += bthrift.Binary.WriteBinaryNocopy(buf[offset:], binaryWriter, []byte(p.Data))
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "user_id", thrift.I64, 1)
+	offset += bthrift.Binary.WriteI64(buf[offset:], p.UserId)
 
 	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
 	return offset
@@ -382,7 +419,16 @@ func (p *DouyinPublishActionRequest) fastWriteField1(buf []byte, binaryWriter bt
 
 func (p *DouyinPublishActionRequest) fastWriteField2(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "title", thrift.STRING, 2)
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "data", thrift.STRING, 2)
+	offset += bthrift.Binary.WriteBinaryNocopy(buf[offset:], binaryWriter, []byte(p.Data))
+
+	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
+	return offset
+}
+
+func (p *DouyinPublishActionRequest) fastWriteField3(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+	offset := 0
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "title", thrift.STRING, 3)
 	offset += bthrift.Binary.WriteStringNocopy(buf[offset:], binaryWriter, p.Title)
 
 	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
@@ -391,8 +437,8 @@ func (p *DouyinPublishActionRequest) fastWriteField2(buf []byte, binaryWriter bt
 
 func (p *DouyinPublishActionRequest) field1Length() int {
 	l := 0
-	l += bthrift.Binary.FieldBeginLength("data", thrift.STRING, 1)
-	l += bthrift.Binary.BinaryLengthNocopy([]byte(p.Data))
+	l += bthrift.Binary.FieldBeginLength("user_id", thrift.I64, 1)
+	l += bthrift.Binary.I64Length(p.UserId)
 
 	l += bthrift.Binary.FieldEndLength()
 	return l
@@ -400,7 +446,16 @@ func (p *DouyinPublishActionRequest) field1Length() int {
 
 func (p *DouyinPublishActionRequest) field2Length() int {
 	l := 0
-	l += bthrift.Binary.FieldBeginLength("title", thrift.STRING, 2)
+	l += bthrift.Binary.FieldBeginLength("data", thrift.STRING, 2)
+	l += bthrift.Binary.BinaryLengthNocopy([]byte(p.Data))
+
+	l += bthrift.Binary.FieldEndLength()
+	return l
+}
+
+func (p *DouyinPublishActionRequest) field3Length() int {
+	l := 0
+	l += bthrift.Binary.FieldBeginLength("title", thrift.STRING, 3)
 	l += bthrift.Binary.StringLengthNocopy(p.Title)
 
 	l += bthrift.Binary.FieldEndLength()

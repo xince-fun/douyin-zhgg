@@ -1,6 +1,7 @@
 package db
 
 import (
+	"ByteTech-7815/douyin-zhgg/pkg/consts"
 	"context"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"gorm.io/gorm"
@@ -10,6 +11,10 @@ type Follow struct {
 	gorm.Model
 	FollowerID int64 `json:"follower_id" gorm:"index;type:bigint(20);not null"`
 	FolloweeID int64 `json:"followee_id" gorm:"index;type:bigint(20);not null"`
+}
+
+func TableName() string {
+	return consts.RelationTableName
 }
 
 func CreateFollow(ctx context.Context, followerID int64, followeeID int64) error {
