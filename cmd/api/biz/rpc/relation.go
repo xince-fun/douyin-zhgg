@@ -73,3 +73,15 @@ func RelationFollowerList(ctx context.Context, req *relation.DouyinRelationFollo
 	}
 	return resp.UserList, nil
 }
+
+// RelationFriendList 获取好友列表
+func RelationFriendList(ctx context.Context, req *relation.DouyinRelationFriendListRequest) ([]*user.User, error) {
+	resp, err := relationClient.RelationFriendList(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	if resp.BaseResp.StatusCode != 0 {
+		return nil, errno.NewErrNo(resp.BaseResp.StatusCode, *resp.BaseResp.StatsuMsg)
+	}
+	return resp.UserList, nil
+}

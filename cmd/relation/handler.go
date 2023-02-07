@@ -69,6 +69,19 @@ func (s *RelationServiceImpl) RelationFollowerList(ctx context.Context, req *rel
 
 // RelationFriendList implements the RelationServiceImpl interface.
 func (s *RelationServiceImpl) RelationFriendList(ctx context.Context, req *relation.DouyinRelationFriendListRequest) (resp *relation.DouyinRelationFriendListResponse, err error) {
-	// TODO: Your code here...
-	return
+	resp = new(relation.DouyinRelationFriendListResponse)
+	if err = req.IsValid(); err != nil {
+		resp.BaseResp = pack.BuildBaseResp(errno.ParamErr)
+		return resp, nil
+	}
+
+	friendList, err := service.NewRelationFriendListService(ctx).RelationFriendList(req)
+	if err != nil {
+		resp.BaseResp = pack.BuildBaseResp(err)
+		return resp, nil
+	}
+
+	resp.BaseResp = pack.BuildBaseResp(errno.Success)
+	resp.UserList = friendList
+	return resp, nil
 }
