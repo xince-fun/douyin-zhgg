@@ -3,6 +3,7 @@ package rpc
 import (
 	"ByteTech-7815/douyin-zhgg/kitex_gen/relation"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/relation/relationservice"
+	"ByteTech-7815/douyin-zhgg/kitex_gen/user"
 	"ByteTech-7815/douyin-zhgg/pkg/consts"
 	"ByteTech-7815/douyin-zhgg/pkg/errno"
 	"ByteTech-7815/douyin-zhgg/pkg/middleware"
@@ -47,4 +48,40 @@ func RelationAction(ctx context.Context, req *relation.DouyinRelationActionReque
 		return errno.NewErrNo(resp.BaseResp.StatusCode, *resp.BaseResp.StatsuMsg)
 	}
 	return nil
+}
+
+// RelationFollowList 获取关注列表
+func RelationFollowList(ctx context.Context, req *relation.DouyinRelationFollowListRequest) ([]*user.User, error) {
+	resp, err := relationClient.RelationFollowList(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	if resp.BaseResp.StatusCode != 0 {
+		return nil, errno.NewErrNo(resp.BaseResp.StatusCode, *resp.BaseResp.StatsuMsg)
+	}
+	return resp.UserList, nil
+}
+
+// RelationFollowerList 获取粉丝列表
+func RelationFollowerList(ctx context.Context, req *relation.DouyinRelationFollowerListRequest) ([]*user.User, error) {
+	resp, err := relationClient.RelationFollowerList(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	if resp.BaseResp.StatusCode != 0 {
+		return nil, errno.NewErrNo(resp.BaseResp.StatusCode, *resp.BaseResp.StatsuMsg)
+	}
+	return resp.UserList, nil
+}
+
+// RelationFriendList 获取好友列表
+func RelationFriendList(ctx context.Context, req *relation.DouyinRelationFriendListRequest) ([]*user.User, error) {
+	resp, err := relationClient.RelationFriendList(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	if resp.BaseResp.StatusCode != 0 {
+		return nil, errno.NewErrNo(resp.BaseResp.StatusCode, *resp.BaseResp.StatsuMsg)
+	}
+	return resp.UserList, nil
 }

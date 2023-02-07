@@ -47,6 +47,15 @@ func GetFansID(ctx context.Context, followeeID int64) ([]int64, error) {
 	return res, nil
 }
 
+// GetFansUsers 返回粉丝列表
+func GetFansUsers(ctx context.Context, followeeID int64) ([]*User, error) {
+	fansIDs, err := GetFansID(ctx, followeeID)
+	if err != nil {
+		klog.Error("error occurred when get fans ids", err)
+	}
+	return QueryUserById(ctx, fansIDs)
+}
+
 // GetFollowingIDs 返回关注用户的id列表
 func GetFollowingIDs(ctx context.Context, userID int64) ([]int64, error) {
 	follows := make([]*Follow, 0)
@@ -114,4 +123,12 @@ func GetFriendsID(ctx context.Context, userID int64) ([]int64, error) {
 		}
 	}
 	return res, nil
+}
+
+func GetFriendsUsers(ctx context.Context, userID int64) ([]*User, error) {
+	friendsIDs, err := GetFriendsID(ctx, userID)
+	if err != nil {
+		klog.Error("error occurred when get friends ids", err)
+	}
+	return QueryUserById(ctx, friendsIDs)
 }

@@ -220,10 +220,7 @@ func RelationAction(ctx context.Context, c *app.RequestContext) {
 		handler.SendResponse(c, errno.ConvertErr(err))
 		return
 	}
-	if err != nil {
-		handler.SendResponse(c, errno.ConvertErr(err))
-		return
-	}
+
 	err = rpc.RelationAction(ctx, &relation.DouyinRelationActionRequest{
 		UserId:     req.UserID,
 		ToUserId:   req.ToUserID,
@@ -233,23 +230,29 @@ func RelationAction(ctx context.Context, c *app.RequestContext) {
 		handler.SendResponse(c, errno.ConvertErr(err))
 		return
 	}
-	handler.SendResponse(c, errno.Success)
+	handler.SendRelationActionResponse(c, errno.Success)
 }
 
 // RelationFollowList .
-// @router /douyin/relatioin/follow/list/ [GET]
+// @router /douyin/relation/follow/list/ [GET]
 func RelationFollowList(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req api.DouyinRelationFollowListRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		handler.SendResponse(c, errno.ConvertErr(err))
 		return
 	}
 
-	resp := new(api.DouyinRelationFollowListResponse)
+	list, err := rpc.RelationFollowList(ctx, &relation.DouyinRelationFollowListRequest{
+		UserId: req.UserID,
+	})
+	if err != nil {
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
 
-	c.JSON(consts.StatusOK, resp)
+	handler.SendRelationListResponse(c, errno.Success, list)
 }
 
 // RelationFollowerList .
@@ -263,7 +266,35 @@ func RelationFollowerList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(api.DouyinRelationFollowerListResponse)
+	list, err := rpc.RelationFollowerList(ctx, &relation.DouyinRelationFollowerListRequest{
+		UserId: req.UserID,
+	})
+	if err != nil {
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
 
-	c.JSON(consts.StatusOK, resp)
+	handler.SendRelationListResponse(c, errno.Success, list)
+}
+
+// RelationFriendList .
+// @router /douyin/relation/friend/list/ [GET]
+func RelationFriendList(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req api.DouyinRelationFriendListRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	list, err := rpc.RelationFriendList(ctx, &relation.DouyinRelationFriendListRequest{
+		UserId: req.UserID,
+	})
+	if err != nil {
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
+
+	handler.SendRelationListResponse(c, errno.Success, list)
 }

@@ -22,6 +22,7 @@ func NewRelationActionService(ctx context.Context) *RelationActionService {
 }
 
 func (s *RelationActionService) RelationAction(req *relation.DouyinRelationActionRequest) error {
+	// 检查要关注的用户是否存在
 	user, err := db.QueryUserById(s.ctx, []int64{req.ToUserId})
 	if err != nil {
 		return err
