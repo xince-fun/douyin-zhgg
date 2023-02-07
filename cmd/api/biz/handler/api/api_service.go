@@ -276,3 +276,19 @@ func RelationFollowerList(ctx context.Context, c *app.RequestContext) {
 
 	handler.SendRelationListResponse(c, errno.Success, list)
 }
+
+// RelationFriendList .
+// @router /douyin/relation/friend/list/ [GET]
+func RelationFriendList(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req api.DouyinRelationFriendListRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	resp := new(api.DouyinRelationFriendListResponse)
+
+	c.JSON(consts.StatusOK, resp)
+}
