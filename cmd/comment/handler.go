@@ -11,6 +11,8 @@ type CommentServiceImpl struct{}
 // CommentAction implements the CommentServiceImpl interface.
 func (s *CommentServiceImpl) CommentAction(ctx context.Context, req *comment.DouyinCommentActionRequest) (resp *comment.DouyinCommentActionResponse, err error) {
 	// TODO: Your code here...
+	resp = new(comment.DouyinCommentActionResponse)
+
 	return
 }
 

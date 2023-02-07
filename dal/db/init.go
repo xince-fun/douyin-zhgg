@@ -2,6 +2,7 @@ package db
 
 import (
 	"ByteTech-7815/douyin-zhgg/pkg/consts"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/plugin/opentelemetry/tracing"
@@ -27,7 +28,7 @@ func Init() {
 		&User{},
 		&Video{},
 		&Favorite{},
-		&Comment{},
+		&CommentOri{},
 		&Follow{},
 	)
 	if err != nil {
