@@ -22,6 +22,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"RelationAction":       kitex.NewMethodInfo(relationActionHandler, newRelationServiceRelationActionArgs, newRelationServiceRelationActionResult, false),
 		"RelationFollowList":   kitex.NewMethodInfo(relationFollowListHandler, newRelationServiceRelationFollowListArgs, newRelationServiceRelationFollowListResult, false),
 		"RelationFollowerList": kitex.NewMethodInfo(relationFollowerListHandler, newRelationServiceRelationFollowerListArgs, newRelationServiceRelationFollowerListResult, false),
+		"RelationFriendList":   kitex.NewMethodInfo(relationFriendListHandler, newRelationServiceRelationFriendListArgs, newRelationServiceRelationFriendListResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName": "relation",
@@ -91,6 +92,24 @@ func newRelationServiceRelationFollowerListResult() interface{} {
 	return relation.NewRelationServiceRelationFollowerListResult()
 }
 
+func relationFriendListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*relation.RelationServiceRelationFriendListArgs)
+	realResult := result.(*relation.RelationServiceRelationFriendListResult)
+	success, err := handler.(relation.RelationService).RelationFriendList(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newRelationServiceRelationFriendListArgs() interface{} {
+	return relation.NewRelationServiceRelationFriendListArgs()
+}
+
+func newRelationServiceRelationFriendListResult() interface{} {
+	return relation.NewRelationServiceRelationFriendListResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -126,6 +145,16 @@ func (p *kClient) RelationFollowerList(ctx context.Context, req *relation.Douyin
 	_args.Req = req
 	var _result relation.RelationServiceRelationFollowerListResult
 	if err = p.c.Call(ctx, "RelationFollowerList", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) RelationFriendList(ctx context.Context, req *relation.DouyinRelationFriendListRequest) (r *relation.DouyinRelationFriendListResponse, err error) {
+	var _args relation.RelationServiceRelationFriendListArgs
+	_args.Req = req
+	var _result relation.RelationServiceRelationFriendListResult
+	if err = p.c.Call(ctx, "RelationFriendList", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

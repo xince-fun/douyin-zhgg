@@ -1,9 +1,9 @@
 package service
 
 import (
-	"ByteTech-7815/douyin-zhgg/cmd/relation/kitex_gen/relation"
 	"ByteTech-7815/douyin-zhgg/dal/db"
 	"ByteTech-7815/douyin-zhgg/dal/pack"
+	"ByteTech-7815/douyin-zhgg/kitex_gen/relation"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/user"
 	"ByteTech-7815/douyin-zhgg/pkg/errno"
 	"context"
