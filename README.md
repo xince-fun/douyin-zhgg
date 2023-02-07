@@ -67,6 +67,13 @@ kitex --thrift-plugin validator -module ByteTech-7815/douyin-zhgg idl/xx.thrift
 ```shell
 kitex --thrift-plugin validator -module ByteTech-7815/douyin-zhgg -service xx -use ByteTech-7815/douyin-zhgg/kitex_gen ../../idl/xx.thrift
 ```
+如果需要更新`api.thrift`
+
+在`cmd/api`下执行
+```shell
+hz update -mod ByteTech-7815/douyin-zhgg/cmd/api -idl ../../idl/api.thrift
+```
+
 ## 包括内容
 
 
