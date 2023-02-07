@@ -1,6 +1,7 @@
 package rpc
 
 import (
+	"ByteTech-7815/douyin-zhgg/kitex_gen/feed"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/publish"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/publish/publishservice"
 	"ByteTech-7815/douyin-zhgg/pkg/consts"
@@ -46,4 +47,16 @@ func Publish(ctx context.Context, req *publish.DouyinPublishActionRequest) error
 		return errno.NewErrNo(resp.BaseResp.StatusCode, *resp.BaseResp.StatsuMsg)
 	}
 	return nil
+}
+
+func PublishList(ctx context.Context, req *publish.DouyinPublishListRequest) ([]*feed.Video, error) {
+	resp, err := publishClient.PublishList(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	if resp.BaseResp.StatusCode != 0 {
+		return nil, errno.NewErrNo(resp.BaseResp.StatusCode, *resp.BaseResp.StatsuMsg)
+	}
+	return resp.VideoList, nil
+
 }

@@ -84,3 +84,18 @@ func SendRelationListResponse(c *app.RequestContext, err error, followList []*us
 		FollowList: followListInterface,
 	})
 }
+
+type VideoListResponse struct {
+	StatusCode int32       `json:"status_code"`
+	StatusMsg  string      `json:"status_msg"`
+	VideoList  interface{} `json:"video_list,omitempty"`
+}
+
+func SendVideoListResponse(c *app.RequestContext, err error, videoList interface{}) {
+	Err := errno.ConvertErr(err)
+	c.JSON(consts.StatusOK, VideoListResponse{
+		StatusCode: Err.ErrCode,
+		StatusMsg:  Err.ErrMsg,
+		VideoList:  videoList,
+	})
+}

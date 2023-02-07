@@ -137,13 +137,18 @@ func PublishList(ctx context.Context, c *app.RequestContext) {
 	var req api.DouyinPublishListRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		handler.SendResponse(c, errno.ConvertErr(err))
 		return
 	}
 
-	resp := new(api.DouyinPublishListResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	videoList, err := rpc.PublishList(context.Background(), &publish.DouyinPublishListRequest{
+		UserId: req.UserID,
+	})
+	if err != nil {
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
+	handler.SendVideoListResponse(c, errno.Success, videoList)
 }
 
 // FavoriteAction .

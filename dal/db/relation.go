@@ -13,7 +13,7 @@ type Follow struct {
 	FolloweeID int64 `json:"followee_id" gorm:"index;type:bigint(20);not null"`
 }
 
-func TableName() string {
+func (f *Follow) TableName() string {
 	return consts.RelationTableName
 }
 
