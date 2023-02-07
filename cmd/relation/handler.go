@@ -31,8 +31,20 @@ func (s *RelationServiceImpl) RelationAction(ctx context.Context, req *relation.
 
 // RelationFollowList implements the RelationServiceImpl interface.
 func (s *RelationServiceImpl) RelationFollowList(ctx context.Context, req *relation.DouyinRelationFollowListRequest) (resp *relation.DouyinRelationFollowListResponse, err error) {
-	// TODO: Your code here...
-	return
+	resp = new(relation.DouyinRelationFollowListResponse)
+	if err = req.IsValid(); err != nil {
+		resp.BaseResp = pack.BuildBaseResp(errno.ParamErr)
+		return resp, nil
+	}
+
+	userList, err := service.NewRelationFollowListService(ctx).RelationFollowList(req)
+	if err != nil {
+		resp.BaseResp = pack.BuildBaseResp(err)
+		return resp, nil
+	}
+	resp.BaseResp = pack.BuildBaseResp(errno.Success)
+	resp.UserList = userList
+	return resp, nil
 }
 
 // RelationFollowerList implements the RelationServiceImpl interface.

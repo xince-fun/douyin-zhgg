@@ -9,18 +9,16 @@ import (
 	"context"
 )
 
-type GetFollowListService struct {
+type RelationFollowList struct {
 	ctx context.Context
 }
 
-// NewFollowListService new GetFollowListService
-func NewFollowListService(ctx context.Context) *GetFollowListService {
-	return &GetFollowListService{ctx: ctx}
+// NewRelationFollowListService new RelationFollowList
+func NewRelationFollowListService(ctx context.Context) *RelationFollowList {
+	return &RelationFollowList{ctx: ctx}
 }
 
-func (s *GetFollowListService) GetFollowList(req *relation.DouyinRelationFollowerListRequest) ([]*user.User, error) {
-	// TODO: 这里我删掉了JWT鉴权，不清楚是不是应该去掉 感觉在API就可以
-
+func (s *RelationFollowList) RelationFollowList(req *relation.DouyinRelationFollowListRequest) ([]*user.User, error) {
 	userIds := []int64{req.UserId}
 	users, err := db.QueryUserById(s.ctx, userIds)
 	if err != nil {
