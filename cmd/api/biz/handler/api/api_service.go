@@ -288,7 +288,13 @@ func RelationFriendList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(api.DouyinRelationFriendListResponse)
+	list, err := rpc.RelationFriendList(ctx, &relation.DouyinRelationFriendListRequest{
+		UserId: req.UserID,
+	})
+	if err != nil {
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
 
-	c.JSON(consts.StatusOK, resp)
+	handler.SendRelationListResponse(c, errno.Success, list)
 }
