@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"ByteTech-7815/douyin-zhgg/kitex_gen/user"
 	"ByteTech-7815/douyin-zhgg/pkg/errno"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
@@ -66,21 +65,16 @@ func SendRelationActionResponse(c *app.RequestContext, err error) {
 }
 
 type FollowListResponse struct {
-	StatusCode int32         `json:"status_code"`
-	StatusMsg  string        `json:"status_msg"`
-	FollowList []interface{} `json:"follow_list"`
+	StatusCode int32       `json:"status_code"`
+	StatusMsg  string      `json:"status_msg"`
+	FollowList interface{} `json:"follow_list"`
 }
 
-func SendRelationListResponse(c *app.RequestContext, err error, followList []*user.User) {
+func SendRelationListResponse(c *app.RequestContext, err error, followList interface{}) {
 	Err := errno.ConvertErr(err)
-	// 把对用户的指针数组转换成interface数组
-	var followListInterface []interface{}
-	for _, v := range followList {
-		followListInterface = append(followListInterface, v)
-	}
 	c.JSON(consts.StatusOK, FollowListResponse{
 		StatusCode: Err.ErrCode,
 		StatusMsg:  Err.ErrMsg,
-		FollowList: followListInterface,
+		FollowList: followList,
 	})
 }
