@@ -3,9 +3,10 @@ package db
 import (
 	"ByteTech-7815/douyin-zhgg/pkg/consts"
 	"context"
+	"time"
+
 	"github.com/cloudwego/kitex/pkg/klog"
 	"gorm.io/gorm"
-	"time"
 )
 
 type Video struct {
@@ -35,8 +36,14 @@ func QueryVideoByLatestTime(ctx context.Context, latestTime int64) ([]*Video, er
 }
 
 // QueryVideoByVideoId query list of video info by video id
-func QueryVideoByVideoId() {
-
+func QueryVideoByVideoId(ctx context.Context, videoIds []int64) ([]*Video, error) {
+	var videos []*Video
+	err := DB.WithContext(ctx).Where("id in (?)", videoIds).Find(&videos).Error
+	if err != nil {
+		klog.Error("QueryVideoByVideoId error " + err.Error())
+		return nil, err
+	}
+	return videos, nil
 }
 
 // QueryVideoByUserId query list of video info by userid
