@@ -1438,6 +1438,7 @@ func (p *DouyinCommentListRequest) Field1DeepEqual(src int64) bool {
 
 type DouyinCommentListResponse struct {
 	BaseResp *BaseResp `thrift:"base_resp,1" frugal:"1,default,BaseResp" json:"base_resp"`
+	CommentList []*Comment `thrift:"comment_list,2" frugal:"1,default,list<Comment>" json:"comment_list"`
 }
 
 func NewDouyinCommentListResponse() *DouyinCommentListResponse {
