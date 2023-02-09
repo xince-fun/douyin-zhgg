@@ -23,7 +23,7 @@ func CommentInfo(commentOri *db.CommentOri, userdb *db.User) *comment.Comment {
 	return comment
 }
 
-func CommentList(currentId int64, comments []*db.CommentOri, userMap map[int64]*db.User, followMap map[int64]*db.Follow) []*comment.Comment {
+func CommentList(comments []*db.CommentOri, userMap map[int64]*db.User) []*comment.Comment {
 	commentList := make([]*comment.Comment, 0)
 	for _, commentOri := range comments {
 		commentUser, ok := userMap[commentOri.UserId]
@@ -35,13 +35,6 @@ func CommentList(currentId int64, comments []*db.CommentOri, userMap map[int64]*
 			}
 			commentUser.ID = 0
 		}
-		var isFollow bool = false
-		if currentId != -1 {
-			_, ok := followMap[commentOri.UserId]
-			if ok {
-				isFollow = true
-			}
-		}
 
 		commentList = append(commentList, &comment.Comment{
 			Id: int64(commentUser.ID),
@@ -50,7 +43,6 @@ func CommentList(currentId int64, comments []*db.CommentOri, userMap map[int64]*
 				Name:          commentUser.Username,
 				FollowCount:   &commentUser.FollowCount,
 				FollowerCount: &commentUser.FollowerCount,
-				IsFollow:      isFollow,
 			},
 			Content:    commentOri.Contents,
 			CreateDate: commentOri.CreatedAt.Format(consts.TimeFormat),
