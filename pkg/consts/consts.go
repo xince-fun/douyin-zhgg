@@ -3,11 +3,13 @@ package consts
 import "time"
 
 const (
-	MySQLDefaultDSN    = "zhgg:zhgg@tcp(127.0.0.1:33069)/zhgg-dy?charset=utf8mb4&parseTime=true&loc=Local"
-	UserServiceAddr    = ":9000" //User服务地址
-	RelationAddr       = ":10000"
-	PublishServiceAddr = ":10010"
-	ETCDAddress        = "127.0.0.1:2379"
+	MySQLDefaultDSN     = "zhgg:zhgg@tcp(127.0.0.1:33069)/zhgg-dy?charset=utf8mb4&parseTime=true&loc=Local"
+	UserServiceAddr     = ":9000" //User服务地址
+	RelationAddr        = ":10000"
+	PublishServiceAddr  = ":10010"
+	CommentServiceAddr  = ":10020"
+	FavoriteServiceAddr = ":10030"
+	ETCDAddress         = "127.0.0.1:2379"
 
 	OssEndPoint        = "oss-cn-hangzhou.aliyuncs.com"
 	OssAccessKeyId     = "oss"
@@ -31,7 +33,7 @@ const (
 	ApiServiceName      = "api"
 	UserServiceName     = "user"
 	RelationServiceName = "relation"
-	PublishServiceName  = "public"
+	PublishServiceName  = "publish"
 
 	//时间字段格式
 	TimeFormat = "2023-02-06 16:25:05"
