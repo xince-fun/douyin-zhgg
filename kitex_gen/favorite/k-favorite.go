@@ -222,6 +222,7 @@ func (p *DouyinFavoriteActionRequest) FastRead(buf []byte) (int, error) {
 	var fieldId int16
 	var issetVideoId bool = false
 	var issetActionType bool = false
+	var issetUserId bool = false
 	_, l, err = bthrift.Binary.ReadStructBegin(buf)
 	offset += l
 	if err != nil {
@@ -268,6 +269,21 @@ func (p *DouyinFavoriteActionRequest) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 3:
+			if fieldTypeId == thrift.I64 {
+				l, err = p.FastReadField3(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+				issetUserId = true
+			} else {
+				l, err = bthrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = bthrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -295,6 +311,11 @@ func (p *DouyinFavoriteActionRequest) FastRead(buf []byte) (int, error) {
 
 	if !issetActionType {
 		fieldId = 2
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetUserId {
+		fieldId = 3
 		goto RequiredFieldNotSetError
 	}
 	return offset, nil
@@ -342,6 +363,20 @@ func (p *DouyinFavoriteActionRequest) FastReadField2(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *DouyinFavoriteActionRequest) FastReadField3(buf []byte) (int, error) {
+	offset := 0
+
+	if v, l, err := bthrift.Binary.ReadI64(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+
+		p.UserId = v
+
+	}
+	return offset, nil
+}
+
 // for compatibility
 func (p *DouyinFavoriteActionRequest) FastWrite(buf []byte) int {
 	return 0
@@ -353,6 +388,7 @@ func (p *DouyinFavoriteActionRequest) FastWriteNocopy(buf []byte, binaryWriter b
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], binaryWriter)
 		offset += p.fastWriteField2(buf[offset:], binaryWriter)
+		offset += p.fastWriteField3(buf[offset:], binaryWriter)
 	}
 	offset += bthrift.Binary.WriteFieldStop(buf[offset:])
 	offset += bthrift.Binary.WriteStructEnd(buf[offset:])
@@ -365,6 +401,7 @@ func (p *DouyinFavoriteActionRequest) BLength() int {
 	if p != nil {
 		l += p.field1Length()
 		l += p.field2Length()
+		l += p.field3Length()
 	}
 	l += bthrift.Binary.FieldStopLength()
 	l += bthrift.Binary.StructEndLength()
@@ -389,6 +426,15 @@ func (p *DouyinFavoriteActionRequest) fastWriteField2(buf []byte, binaryWriter b
 	return offset
 }
 
+func (p *DouyinFavoriteActionRequest) fastWriteField3(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+	offset := 0
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "user_id", thrift.I64, 3)
+	offset += bthrift.Binary.WriteI64(buf[offset:], p.UserId)
+
+	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
+	return offset
+}
+
 func (p *DouyinFavoriteActionRequest) field1Length() int {
 	l := 0
 	l += bthrift.Binary.FieldBeginLength("video_id", thrift.I64, 1)
@@ -402,6 +448,15 @@ func (p *DouyinFavoriteActionRequest) field2Length() int {
 	l := 0
 	l += bthrift.Binary.FieldBeginLength("action_type", thrift.I32, 2)
 	l += bthrift.Binary.I32Length(p.ActionType)
+
+	l += bthrift.Binary.FieldEndLength()
+	return l
+}
+
+func (p *DouyinFavoriteActionRequest) field3Length() int {
+	l := 0
+	l += bthrift.Binary.FieldBeginLength("user_id", thrift.I64, 3)
+	l += bthrift.Binary.I64Length(p.UserId)
 
 	l += bthrift.Binary.FieldEndLength()
 	return l

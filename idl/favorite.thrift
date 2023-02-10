@@ -9,8 +9,9 @@ struct BaseResp {
 }
 
 struct douyin_favorite_action_request {
-    1: required i64 video_id,    // 视频id
-    2: required i32 action_type, // 1-点赞，2-取消点赞
+    1: required string token, // 用户鉴权token
+    2: required i64 video_id,    // 视频id
+    3: required i32 action_type, // 1-点赞，2-取消点赞
 }
 
 struct douyin_favorite_action_response {
@@ -19,10 +20,11 @@ struct douyin_favorite_action_response {
 
 struct douyin_favorite_list_request {
     1: required i64 user_id,  // 用户id
+    2: required string token, // 用户鉴权token
 }
 
 struct douyin_favorite_list_response {
-    1: required list<feed.Video> video_list, // 用户点赞视频列表
+    1: required list<Video> video_list, // 用户点赞视频列表
     2: required BaseResp base_resp,
 }
 
