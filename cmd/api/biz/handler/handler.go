@@ -3,6 +3,7 @@ package handler
 import (
 	"ByteTech-7815/douyin-zhgg/kitex_gen/user"
 	"ByteTech-7815/douyin-zhgg/pkg/errno"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
@@ -97,5 +98,20 @@ func SendVideoListResponse(c *app.RequestContext, err error, videoList interface
 		StatusCode: Err.ErrCode,
 		StatusMsg:  Err.ErrMsg,
 		VideoList:  videoList,
+	})
+}
+
+type FeedInfoResponse struct {
+	StatusCode int32       `json:"status_code"`
+	StatusMsg  string      `json:"status_msg"`
+	Feed       interface{} `json:"feed"`
+}
+
+func SendFeedResponse(c *app.RequestContext, err error, feed interface{}) {
+	Err := errno.ConvertErr(err)
+	c.JSON(consts.StatusOK, FeedInfoResponse{
+		StatusCode: Err.ErrCode,
+		StatusMsg:  Err.ErrMsg,
+		Feed:       feed,
 	})
 }
