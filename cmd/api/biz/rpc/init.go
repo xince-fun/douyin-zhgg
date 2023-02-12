@@ -5,4 +5,5 @@ func InitRPC() {
 	initUser()
 	initPublish()
 	initRelation()
+	initFeed()
 }

@@ -34,6 +34,7 @@ const (
 	UserServiceName     = "user"
 	RelationServiceName = "relation"
 	PublishServiceName  = "publish"
+	FeedServiceName     = "feed"
 
 	//时间字段格式
 	TimeFormat = "2023-02-06 16:25:05"
