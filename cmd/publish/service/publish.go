@@ -83,7 +83,7 @@ func (s *PublishService) Publish(req *publish.DouyinPublishActionRequest) error 
 		CoverUrl:      coverUrl,
 		FavoriteCount: 0,
 		CommentCount:  0,
-		UpdatedAt:     time.Now()})
+		Time:          time.Now().Unix()})
 	if err != nil {
 		return err
 	}

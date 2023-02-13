@@ -19,6 +19,7 @@ const (
 	UserNotExistErrCode        = 10011
 	AuthorizationFailedErrCode = 10012
 	TokenInvalidErrCode        = 10013
+	LoginFailErrCode           = 10014
 )
 
 // 视频模块

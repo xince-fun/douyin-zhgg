@@ -29,7 +29,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	addr, err := net.ResolveTCPAddr(consts.TCP, consts.UserServiceAddr)
+	addr, err := net.ResolveTCPAddr(consts.TCP, consts.FeedServiceAddr)
 	if err != nil {
 		panic(err)
 	}
@@ -42,7 +42,7 @@ func main() {
 		server.WithMiddleware(middleware.CommonMiddleware),
 		server.WithMiddleware(middleware.ServerMiddleware),
 		server.WithSuite(tracing.NewServerSuite()),
-		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: consts.UserServiceName}),
+		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: consts.FeedServiceName}),
 	)
 
 	err = svr.Run()

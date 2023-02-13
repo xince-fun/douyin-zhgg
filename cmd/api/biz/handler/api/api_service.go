@@ -47,15 +47,15 @@ func GetUserFeed(ctx context.Context, c *app.RequestContext) {
 // @router /douyin/user/register/ [POST]
 func UserRegister(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req api.DouyinUserRegisterRequest
-	err = c.BindAndValidate(&req)
+	username := c.Query("username")
+	password := c.Query("password")
 	if err != nil {
 		handler.SendResponse(c, errno.ConvertErr(err))
 		return
 	}
 	userId, token, err := rpc.RegisterUser(context.Background(), &user.DouyinUserRegisterRequest{
-		Username: req.Username,
-		Password: req.Password,
+		Username: username,
+		Password: password,
 	})
 	if err != nil {
 		handler.SendResponse(c, errno.ConvertErr(err))

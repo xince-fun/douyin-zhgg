@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"ByteTech-7815/douyin-zhgg/cmd/api/biz/handler"
-	"ByteTech-7815/douyin-zhgg/cmd/api/biz/model/api"
 	"ByteTech-7815/douyin-zhgg/cmd/api/biz/rpc"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/user"
 	"ByteTech-7815/douyin-zhgg/pkg/consts"
@@ -38,16 +37,15 @@ func InitJWT() {
 		},
 		Authenticator: func(ctx context.Context, c *app.RequestContext) (interface{}, error) {
 			var err error
-			var req api.DouyinUserLoginRequest
-			if err = c.BindAndValidate(&req); err != nil {
-				return "", jwt.ErrMissingLoginValues
-			}
-			if len(req.Username) == 0 || len(req.Password) == 0 {
+
+			username := c.Query("username")
+			password := c.Query("password")
+			if len(username) == 0 || len(password) == 0 {
 				return "", jwt.ErrMissingLoginValues
 			}
 			userId, err := rpc.LoginUser(context.Background(), &user.DouyinUserLoginRequest{
-				Username: req.Username,
-				Password: req.Password,
+				Username: username,
+				Password: password,
 			})
 			c.Set("USER_ID", userId)
 			return userId, err
@@ -57,7 +55,7 @@ func InitJWT() {
 			handler.SendUserResponse(c, errno.Success, userId.(int64), message)
 		},
 		Unauthorized: func(ctx context.Context, c *app.RequestContext, code int, message string) {
-			handler.SendResponse(c, errno.AuthorizationFailedErr)
+			handler.SendResponse(c, errno.LoginFailErr)
 		},
 		HTTPStatusMessageFunc: func(e error, ctx context.Context, c *app.RequestContext) string {
 			switch t := e.(type) {
