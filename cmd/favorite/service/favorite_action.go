@@ -3,6 +3,7 @@ package service
 import (
 	"ByteTech-7815/douyin-zhgg/dal/db"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/favorite"
+	"ByteTech-7815/douyin-zhgg/pkg/jwt"
 	"context"
 	"errors"
 )
@@ -18,6 +19,12 @@ func NewFavoriteActionService(ctx context.Context) *FavoriteActionService {
 
 // FavoriteAction implement the like and unlike operations
 func (s *FavoriteActionService) FavoriteAction(req *favorite.DouyinFavoriteActionRequest) error {
+	claim, err := jwt.ParseToken(req.Token)
+	if err != nil {
+		return err
+	}
+	currentId := claim.UserId
+
 	videos, err := db.QueryVideoByVideoId(s.ctx, []int64{req.VideoId})
 	if err != nil {
 		return err
@@ -30,7 +37,7 @@ func (s *FavoriteActionService) FavoriteAction(req *favorite.DouyinFavoriteActio
 	//若ActionType不等于1和2，则返回错误
 	if req.ActionType == 1 {
 		favorite := &db.Favorite{
-			UserId:  req.UserId,
+			UserId:  currentId,
 			VideoId: req.VideoId,
 		}
 
@@ -40,7 +47,7 @@ func (s *FavoriteActionService) FavoriteAction(req *favorite.DouyinFavoriteActio
 		}
 	}
 	if req.ActionType == 2 {
-		err := db.DeleteFavorite(s.ctx, req.UserId, req.VideoId)
+		err := db.DeleteFavorite(s.ctx, currentId, req.VideoId)
 		if err != nil {
 			return err
 		}
