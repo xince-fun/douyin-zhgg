@@ -23,7 +23,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"PublishList":   kitex.NewMethodInfo(publishListHandler, newPublishServicePublishListArgs, newPublishServicePublishListResult, false),
 	}
 	extra := map[string]interface{}{
-		"PackageName": "public",
+		"PackageName": "publish",
 	}
 	svcInfo := &kitex.ServiceInfo{
 		ServiceName:     serviceName,

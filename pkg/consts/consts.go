@@ -9,6 +9,7 @@ const (
 	PublishServiceAddr  = ":10010"
 	CommentServiceAddr  = ":10020"
 	FavoriteServiceAddr = ":10030"
+	FeedServiceAddr     = ":10040"
 	ETCDAddress         = "127.0.0.1:2379"
 
 	OssEndPoint        = "oss-cn-hangzhou.aliyuncs.com"
@@ -34,6 +35,7 @@ const (
 	UserServiceName     = "user"
 	RelationServiceName = "relation"
 	PublishServiceName  = "publish"
+	FeedServiceName     = "feed"
 
 	//时间字段格式
 	TimeFormat = "2023-02-06 16:25:05"

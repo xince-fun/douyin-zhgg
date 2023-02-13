@@ -43,6 +43,7 @@ var (
 	UserNotExistErr        = NewErrNo(UserNotExistErrCode, "User does not exist")
 	AuthorizationFailedErr = NewErrNo(AuthorizationFailedErrCode, "Authorization failed")
 	TokenInvalidErr        = NewErrNo(TokenInvalidErrCode, "Token invalid")
+	LoginFailErr           = NewErrNo(LoginFailErrCode, "用户名或密码错误")
 
 	PublishVideoToPublicErr = NewErrNo(PublishVideoToPublicErrCode, "Unable to public video to public")
 	PublishVideoToOssErr    = NewErrNo(PublishVideoToOssErrCode, "Unable to public video to oss")

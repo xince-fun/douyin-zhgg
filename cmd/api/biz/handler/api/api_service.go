@@ -7,6 +7,7 @@ import (
 	"ByteTech-7815/douyin-zhgg/cmd/api/biz/middleware"
 	api "ByteTech-7815/douyin-zhgg/cmd/api/biz/model/api"
 	"ByteTech-7815/douyin-zhgg/cmd/api/biz/rpc"
+	"ByteTech-7815/douyin-zhgg/kitex_gen/feed"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/publish"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/relation"
 	"ByteTech-7815/douyin-zhgg/kitex_gen/user"
@@ -14,9 +15,10 @@ import (
 	"ByteTech-7815/douyin-zhgg/pkg/errno"
 	"bytes"
 	"context"
+	"io"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	"io"
 )
 
 // GetUserFeed .
@@ -30,24 +32,30 @@ func GetUserFeed(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(api.DouyinFeedResponse)
+	feedinfo, err := rpc.GetUserFeed(context.Background(), &feed.DouyinFeedRequest{
+		LatestTime: req.LatestTime,
+	})
+	if err != nil {
+		handler.SendResponse(c, errno.ConvertErr(err))
+		return
+	}
 
-	c.JSON(consts.StatusOK, resp)
+	handler.SendFeedResponse(c, errno.Success, feedinfo)
 }
 
 // UserRegister .
 // @router /douyin/user/register/ [POST]
 func UserRegister(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req api.DouyinUserRegisterRequest
-	err = c.BindAndValidate(&req)
+	username := c.Query("username")
+	password := c.Query("password")
 	if err != nil {
 		handler.SendResponse(c, errno.ConvertErr(err))
 		return
 	}
 	userId, token, err := rpc.RegisterUser(context.Background(), &user.DouyinUserRegisterRequest{
-		Username: req.Username,
-		Password: req.Password,
+		Username: username,
+		Password: password,
 	})
 	if err != nil {
 		handler.SendResponse(c, errno.ConvertErr(err))
